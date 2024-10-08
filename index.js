@@ -1,7 +1,18 @@
-const express = require('express');
+import express from 'express';
+import userRoutes from './routes/userRoutes.js';
+import userCourseRoutes from './routes/usercourseRoutes.js';
+
 const app = new express();
 
-app
-.use(express.json())
-.use('/api', require('./routes/api')())
-.listen(3000, () => console.log('running on port 3000'));
+app.use(express.json()); //parsing JSON bodies
+
+// Routes
+
+app.use('/users', userRoutes);
+app.use('/usercourse', userCourseRoutes);
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+})
