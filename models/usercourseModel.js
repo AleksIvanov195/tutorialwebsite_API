@@ -10,9 +10,9 @@ const UserCourseModel ={
 		'UsercourseCompletionDate',
 		'UsercourseCoursestatusID',],
 
-	// Related tables : Course and CourseStatus
+	// Related tables: Course and CourseStatus
 
-	buildReadQuery: (userId, statusId) =>{
+	buildReadQuery: (usercourseId, userId, statusId) =>{
 		// Initialisations ------------------------
 		let fields = [
 			UserCourseModel.idfield,
@@ -34,20 +34,28 @@ const UserCourseModel ={
 
 		let where = '';
 		let parameters = {};
+		
+		if (usercourseId) {
+			where += 'Usercourse.UsercourseID = :UsercourseID';
+			parameters.UsercourseID = parseInt(usercourseId);
+		}
 
 		if (userId) {
+			if (where) where += ' AND ';
 			where += 'Usercourse.UsercourseUserID = :UserID';
 			parameters.UserID = parseInt(userId);
 		}
 		
 		if (statusId) {
-			if (where) where += ' AND '; // Add AND if there is already a condition
+			if (where) where += ' AND ';
 			where += 'Usercourse.UsercourseCoursestatusID = :StatusID';
 			parameters.StatusID = parseInt(statusId);
 		}
-
+		
 		// Construct the SQL query string
 		const { query, params } = constructPreparedStatement(fields, table, where, parameters);
+		console.log(query);
+    console.log('Parameters:', params);
 		return { query, params };
 
 	},
