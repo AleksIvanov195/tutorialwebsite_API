@@ -4,13 +4,14 @@ import userCourseRoutes from './routes/usercourseRoutes.js';
 import courseRoutes from './routes/courseRoutes.js';
 const app = new express();
 
-app.use(express.json()); // parsing JSON bodies
+// parsing JSON bodies
+app.use(express.json());
 
 // Routes
 
 app.use('/users', userRoutes);
-app.use('/usercourse', userCourseRoutes);
-app.use('/course', courseRoutes);
+app.use('/usercourses', userCourseRoutes);
+app.use('/courses', courseRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 3000;

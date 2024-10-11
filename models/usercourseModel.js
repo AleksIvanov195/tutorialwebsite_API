@@ -13,7 +13,7 @@ const UserCourseModel = {
 
 	// Related tables: Course and CourseStatus
 
-	buildReadQuery: (usercourseId, userId, statusId) => {
+	buildReadQuery: (usercourseID, userID, statusID) => {
 		// Initialisations ------------------------
 		const fields = [
 			UserCourseModel.idfield,
@@ -35,21 +35,21 @@ const UserCourseModel = {
 		let where = '';
 		const parameters = {};
 
-		if (usercourseId) {
+		if (usercourseID) {
 			where += 'Usercourse.UsercourseID = :UsercourseID';
-			parameters.UsercourseID = parseInt(usercourseId);
+			parameters.UsercourseID = parseInt(usercourseID);
 		}
 
-		if (userId) {
+		if (userID) {
 			if (where) where += ' AND ';
 			where += 'Usercourse.UsercourseUserID = :UserID';
-			parameters.UserID = parseInt(userId);
+			parameters.UserID = parseInt(userID);
 		}
 
-		if (statusId) {
+		if (statusID) {
 			if (where) where += ' AND ';
 			where += 'Usercourse.UsercourseCoursestatusID = :StatusID';
-			parameters.StatusID = parseInt(statusId);
+			parameters.StatusID = parseInt(statusID);
 		}
 
 		// Construct the SQL query string

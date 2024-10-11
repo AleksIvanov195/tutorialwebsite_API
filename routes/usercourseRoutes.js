@@ -3,8 +3,11 @@ import { getUserCourses } from '../controllers/usercourseController.js';
 
 const router = express.Router();
 
-router.get('/userID/:userId/statusID/:statusId?', getUserCourses); // Get a user course record for a user with a specific status
-router.get('/userID/:userId', getUserCourses); // Get all user courses records for a user
-router.get('/:usercourseId', getUserCourses); // Get a specific user course via ID
+// Return a specific user's usercourse interactions with a optional statusID
+router.get('/user/:userID/status/:statusID?', getUserCourses);
+// Return all usercourses interactions for a specific user
+router.get('/user/:userID', getUserCourses);
+// Return a usercourse interaction
+router.get('/:usercourseID', getUserCourses);
 
 export default router;
