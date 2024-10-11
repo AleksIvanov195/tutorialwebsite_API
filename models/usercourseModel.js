@@ -1,20 +1,21 @@
-import { constructPreparedStatement } from "./modelutils.js";
+import { constructPreparedStatement } from './modelutils.js';
 
-const UserCourseModel ={
+const UserCourseModel = {
 	table: 'Usercourse',
 	idfield: 'UsercourseID',
 	mutableFields: [
-		'UsercourseUserID', 
-		'UsercourseCourseID', 
-		'UsercourseStartdate', 
+		'UsercourseUserID',
+		'UsercourseCourseID',
+		'UsercourseStartdate',
 		'UsercourseCompletionDate',
-		'UsercourseCoursestatusID',],
+		'UsercourseCoursestatusID',
+	],
 
 	// Related tables: Course and CourseStatus
 
-	buildReadQuery: (usercourseId, userId, statusId) =>{
+	buildReadQuery: (usercourseId, userId, statusId) => {
 		// Initialisations ------------------------
-		let fields = [
+		const fields = [
 			UserCourseModel.idfield,
 			...UserCourseModel.mutableFields,
 			'CourseStatus.CoursestatusName',
@@ -23,18 +24,17 @@ const UserCourseModel ={
 			'Course.CourseDescription',
 			'Course.CourseCategory',
 			'Course.CourseDatecreated',
-			
 		];
 
-		let table = [
+		const table = [
 			`${UserCourseModel.table}
 			INNER JOIN Course ON Usercourse.UsercourseCourseID = Course.CourseID
-			INNER JOIN Coursestatus ON Usercourse.UsercourseCoursestatusID = Coursestatus.CoursestatusID`
-		]
+			INNER JOIN Coursestatus ON Usercourse.UsercourseCoursestatusID = Coursestatus.CoursestatusID`,
+		];
 
 		let where = '';
-		let parameters = {};
-		
+		const parameters = {};
+
 		if (usercourseId) {
 			where += 'Usercourse.UsercourseID = :UsercourseID';
 			parameters.UsercourseID = parseInt(usercourseId);
@@ -45,23 +45,24 @@ const UserCourseModel ={
 			where += 'Usercourse.UsercourseUserID = :UserID';
 			parameters.UserID = parseInt(userId);
 		}
-		
+
 		if (statusId) {
 			if (where) where += ' AND ';
 			where += 'Usercourse.UsercourseCoursestatusID = :StatusID';
 			parameters.StatusID = parseInt(statusId);
 		}
-		
+
 		// Construct the SQL query string
-		const { query, params } = constructPreparedStatement(fields, table, where, parameters);
+		const { query, params } = constructPreparedStatement(
+			fields,
+			table,
+			where,
+			parameters
+		);
 		console.log(query);
-    console.log('Parameters:', params);
+		console.log('Parameters:', params);
 		return { query, params };
-
 	},
-
-}
-
-
+};
 
 export default UserCourseModel;
