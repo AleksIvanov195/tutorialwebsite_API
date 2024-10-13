@@ -7,58 +7,92 @@ const listOfEndpoints = [
 	{
 		entity: 'Course',
 		sap: '/api/courses',
-		services: [
-			{
+		services: {
+			get:[
+				{
+					endpoint: '/',
+					description: 'Return all courses',
+					examples: [`${API_URL}/courses`],
+				},
+				{
+					endpoint: '/:courseID',
+					description: 'Return a course by ID',
+					examples: [`${API_URL}/courses/1`],
+				},
+				{
+					endpoint: '/user/:userID/statuses',
+					description: 'Return all courses with a status for the specified user',
+					examples: [`${API_URL}/courses/user/1/statuses`],
+				},
+			],
+			post:{
 				endpoint: '/',
-				description: 'Return all courses',
-				examples: [`${API_URL}/courses`],
+				description: 'Insert a new assessment',
 			},
-			{
-				endpoint: '/:courseID',
-				description: 'Return a course by ID',
-				examples: [`${API_URL}/courses/1`],
+			put:{
+
 			},
-			{
-				endpoint: '/user/:userID/statuses',
-				description: 'Return all courses with a status for the specified user',
-				examples: [`${API_URL}/courses/user/1/statuses`],
+			delete:{
+
 			},
-		],
+		},
 	},
 	{
 		entity: 'UserCourse',
 		sap: '/api/usercourses',
-		services: [
-			{
-				endpoint: '/user/:userID',
-				description: 'Return all usercourses interactions for a specific user',
-				examples: [`${API_URL}/usercourses/user/1`],
+		services: {
+			get:[
+				{
+					endpoint: '/user/:userID',
+					description: 'Return all usercourses interactions for a specific user',
+					examples: [`${API_URL}/usercourses/user/1`],
+				},
+				{
+					endpoint: '/:usercourseID',
+					description: 'Return a usercourse interaction',
+					examples: [`${API_URL}/usercourses/777`],
+				},
+				{
+					endpoint: '/user/:userID/status/:statusID?',
+					description: 'Return a specific user\'s usercourse interactions with an optional statusID',
+					examples: [
+						`${API_URL}/usercourses/user/1`,
+						`${API_URL}/usercourses/user/1/status/1`,
+					],
+				},
+			],
+			post:{
+
 			},
-			{
-				endpoint: '/:usercourseID',
-				description: 'Return a usercourse interaction',
-				examples: [`${API_URL}/usercourses/777`],
+			put:{
+
 			},
-			{
-				endpoint: '/user/:userID/status/:statusID?',
-				description: 'Return a specific user\'s usercourse interactions with an optional statusID',
-				examples: [
-					`${API_URL}/usercourses/user/1`,
-					`${API_URL}/usercourses/user/1/status/1`,
-				],
+			delete:{
+
 			},
-		],
+		},
 	},
 	{
 		entity: 'User',
 		sap: '/api/users',
-		services: [
-			{
-				endpoint: '/:id',
-				description: 'Return a user by ID',
-				examples: [`${API_URL}/users/1`],
+		services: {
+			get: [
+				{
+					endpoint: '/:id',
+					description: 'Return a user by ID',
+					examples: [`${API_URL}/users/1`],
+				},
+			],
+			post:{
+
 			},
-		],
+			put:{
+
+			},
+			delete:{
+
+			},
+		},
 	},
 ];
 

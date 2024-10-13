@@ -11,7 +11,17 @@ const CourseAccessor = {
         } catch (error) {
 					console.log('Error getting usercourses: ', error);
         }
-    }
+    },
+		createCourse: async (courseData) => {
+			const { query, params } = CourseModel.buildCreateQuery(courseData);
+			try {
+				const [result] = await database.execute(query, params);
+				console.log(result);
+				return result;
+			} catch (error) {
+				console.log('Error creating course: ', error);
+			}
+		},
 };
 
 export default CourseAccessor;

@@ -16,4 +16,22 @@ const getCourses = async (req, res) => {
 	}
 };
 
-export {getCourses};
+const createCourse = async (req, res) => {
+  const courseData = req.body;
+  try {
+    const result = await CourseAccessor.createCourse(courseData);
+		const createdCourse = {
+			CourseID: result.insertId,
+			...courseData,
+		};
+    res.status(201).json({ 
+			message: 'Course created successfully', 
+			course: createdCourse
+		});
+  } catch (error) {
+    console.log('Error creating course: ', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+export {getCourses, createCourse};

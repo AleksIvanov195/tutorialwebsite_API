@@ -1,4 +1,4 @@
-import { constructPreparedStatement } from './modelutils.js';
+import { constructPreparedStatement, constructInsertQuery } from './modelutils.js';
 
 const CourseModel = {
 	table: 'Course',
@@ -54,6 +54,9 @@ const CourseModel = {
 		console.log(query);
 		console.log('Parameters:', params);
 		return { query, params };
+	},
+	buildCreateQuery: (courseData) => {
+		return constructInsertQuery(CourseModel.mutableFields, CourseModel.table, courseData);
 	},
 };
 
