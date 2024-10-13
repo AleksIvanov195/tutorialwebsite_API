@@ -1,10 +1,10 @@
 import database from "../database.js"
 import model from "../models/userModel.js";
 
-const getUserById = async (id) =>{
+const getUserByID = async (userID) =>{
 	try{
-		const query = model.getUserByIdQuery(id);
-		const [rows] = await database.execute(query, [id])
+		const query = model.getUserByID(userID);
+		const [rows] = await database.execute(query, [userID])
 		const user = rows[0];
 		return user;
 	}catch (error){
@@ -13,14 +13,5 @@ const getUserById = async (id) =>{
 	}
 }
 
-const getUserByEmail = async (email) =>{
-//	try{
-		//const query = model.getUserByEmailQuery(email)
-//	}
-}
 
-const createNewUser = async (userData) =>{
-
-}
-
-export {getUserById};
+export {getUserByID};

@@ -30,7 +30,7 @@ const listOfEndpoints = [
 		sap: '/api/usercourses',
 		services: [
 			{
-				endpoint: '/',
+				endpoint: '/user/:userID',
 				description: 'Return all usercourses interactions for a specific user',
 				examples: [`${API_URL}/usercourses/user/1`],
 			},

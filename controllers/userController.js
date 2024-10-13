@@ -1,8 +1,10 @@
-import { getUserById } from "../accessors/userAccessor.js";
+import { getUserByID } from "../accessors/userAccessor.js";
 
 const getUser = async (req, res) =>{
+	const userID = req.params.userID;
+
 	try{
-		const user = await getUserById(req.params.id);
+		const user = await getUserByID(userID);
 		if(!user)return res.status(404).json({ message: 'User not found'});
 
 		res.status(200).json(user);
