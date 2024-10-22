@@ -78,7 +78,7 @@ const listOfEndpoints = [
 		services: {
 			get: [
 				{
-					endpoint: '/:id',
+					endpoint: '/:userID',
 					description: 'Return a user by ID',
 					examples: [`${API_URL}/users/1`],
 				},

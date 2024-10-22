@@ -1,15 +1,29 @@
+import cors from 'cors';
 import express from 'express';
+import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes.js';
 import userCourseRoutes from './routes/usercourseRoutes.js';
 import courseRoutes from './routes/courseRoutes.js';
 import { domainRouter, defaultRouter } from './routes/defaultRouter.js';
-const app = new express();
+
+dotenv.config();
+const app = express();
+
+
+const allowedDomains = process.env.ALLOWED_DOMAINS.split(',');
+
+
+app.use(cors({
+	origin: allowedDomains,
+	methods: 'GET,POST,PUT,DELETE',
+	credentials: true,
+	allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+}));
 
 // parsing JSON bodies
 app.use(express.json());
 
 // Routes
-
 app.use('/api/users', userRoutes);
 app.use('/api/usercourses', userCourseRoutes);
 app.use('/api/courses', courseRoutes);
