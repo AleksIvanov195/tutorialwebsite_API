@@ -1,4 +1,4 @@
-import { constructPreparedStatement } from './modelutils.js';
+import { constructPreparedStatement, parseRequestQuery } from './modelutils.js';
 
 const UserCourseModel = {
 	table: 'Usercourse',
@@ -15,7 +15,7 @@ const UserCourseModel = {
 
 	buildReadQuery: (req) => {
 		// Initialisations ------------------------
-		const { usercourseID, userID, statusID } = req.params;
+		const { usercourseID, userID } = req.params;
 		const fields = [
 			UserCourseModel.idfield,
 			...UserCourseModel.mutableFields,
@@ -37,22 +37,21 @@ const UserCourseModel = {
 		const parameters = {};
 
 		if (usercourseID) {
-			where += 'Usercourse.UsercourseID = :UsercourseID';
+			where += ' AND Usercourse.UsercourseID = :UsercourseID';
 			parameters.UsercourseID = parseInt(usercourseID);
 		}
 
 		if (userID) {
-			if (where) where += ' AND ';
-			where += 'Usercourse.UsercourseUserID = :UserID';
+			where += ' AND Usercourse.UsercourseUserID = :UserID';
 			parameters.UserID = parseInt(userID);
 		}
 
-		if (statusID) {
-			if (where) where += ' AND ';
-			where += 'Usercourse.UsercourseCoursestatusID = :StatusID';
-			parameters.StatusID = parseInt(statusID);
-		}
+		const filter = parseRequestQuery(req, [...UserCourseModel.mutableFields, UserCourseModel.idfield, 'CoursestatusName', 'CoursestatusID']);
+		if (filter) {
+			where += filter.filters;
+			Object.assign(parameters, filter.parameters);
 
+		}
 		// Construct the SQL query string
 		const { query, params } = constructPreparedStatement(
 			fields,
