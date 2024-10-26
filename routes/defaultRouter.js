@@ -22,7 +22,10 @@ const listOfEndpoints = [
 				{
 					endpoint: '/users/:userID',
 					description: 'Return all courses with a statuses for the specified user',
-					examples: [`${API_URL}/courses/user/1`],
+					examples: [
+						`${API_URL}/courses/user/1`,
+						`${API_URL}/courses/users/1?CoursestatusName=NotStarted`,
+					],
 				},
 			],
 			post:{
