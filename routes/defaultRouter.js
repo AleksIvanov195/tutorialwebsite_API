@@ -20,14 +20,14 @@ const listOfEndpoints = [
 					examples: [`${API_URL}/courses/1`],
 				},
 				{
-					endpoint: '/user/:userID/statuses',
-					description: 'Return all courses with a status for the specified user',
-					examples: [`${API_URL}/courses/user/1/statuses`],
+					endpoint: '/users/:userID',
+					description: 'Return all courses with a statuses for the specified user',
+					examples: [`${API_URL}/courses/user/1`],
 				},
 			],
 			post:{
 				endpoint: '/',
-				description: 'Insert a new assessment',
+				description: 'Insert a new course',
 			},
 			put:{
 
@@ -43,9 +43,9 @@ const listOfEndpoints = [
 		services: {
 			get:[
 				{
-					endpoint: '/user/:userID',
-					description: 'Return all usercourses interactions for a specific user',
-					examples: [`${API_URL}/usercourses/user/1`],
+					endpoint: '/users/:userID',
+					description: 'Return all usercourses records for a specific user',
+					examples: [`${API_URL}/usercourses/users/1`],
 				},
 				{
 					endpoint: '/:usercourseID',
@@ -53,11 +53,11 @@ const listOfEndpoints = [
 					examples: [`${API_URL}/usercourses/777`],
 				},
 				{
-					endpoint: '/user/:userID/status/:statusID?',
-					description: 'Return a specific user\'s usercourse interactions with an optional statusID',
+					endpoint: '/users/:userID/status/:statusID?',
+					description: 'Return a specific user\'s usercourse records with an optional statusID',
 					examples: [
-						`${API_URL}/usercourses/user/1`,
-						`${API_URL}/usercourses/user/1/status/1`,
+						`${API_URL}/usercourses/users/1`,
+						`${API_URL}/usercourses/users/1/status/1`,
 					],
 				},
 			],
