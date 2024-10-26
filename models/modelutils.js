@@ -25,5 +25,20 @@ const constructInsertQuery = (fields, table, data) => {
 	return { query, params: parameters };
 };
 
+const parseRequestQuery = (req, allowedFields) => {
+	console.log(allowedFields)
+	const filter = {
+		filters: '',
+		parameters: {},
+	};
 
-export { constructPreparedStatement, constructInsertQuery };
+	for(const key in req.query) {
+		if(allowedFields.includes(key)) {
+			filter.filters += ` AND ${key}=:${key}`;
+			filter.parameters[key] = req.query[key];
+		}
+	}
+	return filter;
+};
+
+export { constructPreparedStatement, constructInsertQuery, parseRequestQuery };
