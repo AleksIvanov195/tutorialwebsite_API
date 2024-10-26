@@ -12,8 +12,9 @@ const CourseModel = {
 
 	// Related tables: Usercourse and CourseStatus
 
-	buildReadQuery: (courseID, userID) => {
+	buildReadQuery: (req) => {
 		// Initialisations ------------------------
+		const { userID, courseID } = req.params;
 		const fields = [
 			`${CourseModel.idfield}`,
 			...CourseModel.mutableFields,

@@ -2,8 +2,8 @@ import database from '../database.js';
 import CourseModel from '../models/courseModel.js';
 
 const CourseAccessor = {
-    getCourses: async (courseID, userID) => {
-        const { query, params } = CourseModel.buildReadQuery(courseID, userID);
+    getCourses: async (req) => {
+        const { query, params } = CourseModel.buildReadQuery(req);
         try {
             const [courses] = await database.execute(query, params);
 						console.log(courses)

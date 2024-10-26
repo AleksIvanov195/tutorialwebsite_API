@@ -1,10 +1,9 @@
 import CourseAccessor from "../accessors/courseAccessor.js";
 
 const getCourses = async (req, res) => {
-	const courseID = req.params.courseID || null;
-	const userID = req.params.userID || null;
+	//console.log(req.query)
 	try {
-			const userCourses = await CourseAccessor.getCourses(courseID, userID);
+			const userCourses = await CourseAccessor.getCourses(req);
 
 			if (!userCourses.length) return res.status(404).json({ message: 'No courses found.' });
 		
