@@ -56,11 +56,11 @@ const listOfEndpoints = [
 					examples: [`${API_URL}/usercourses/777`],
 				},
 				{
-					endpoint: '/users/:userID/status/:statusID?',
-					description: 'Return a specific user\'s usercourse records with an optional statusID',
+					endpoint: '/users/:userID',
+					description: 'Return a specific user\'s usercourse records',
 					examples: [
 						`${API_URL}/usercourses/users/1`,
-						`${API_URL}/usercourses/users/1/status/1`,
+						`${API_URL}/usercourses/users/1?CoursestatusName=InProgress`,
 					],
 				},
 			],
