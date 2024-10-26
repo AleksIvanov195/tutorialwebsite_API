@@ -1,4 +1,4 @@
-import { constructPreparedStatement, constructInsertQuery } from './modelutils.js';
+import { constructPreparedStatement, constructInsertQuery, parseRequestQuery } from './modelutils.js';
 
 const CourseModel = {
 	table: 'Course',
@@ -44,7 +44,12 @@ const CourseModel = {
 			where += '1=1';
 			parameters.UserID = parseInt(userID);
 		}
+		const filter = parseRequestQuery(req, [...CourseModel.mutableFields, CourseModel.idfield, 'CoursestatusName', 'CoursestatusID']);
+		if (filter) {
+			where += filter.filters;
+			Object.assign(parameters, filter.parameters);
 
+		}
 		// Construct the SQL query string
 		const { query, params } = constructPreparedStatement(
 			fields,
