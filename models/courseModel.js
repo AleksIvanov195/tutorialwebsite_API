@@ -26,14 +26,14 @@ const CourseModel = {
 		const parameters = {};
 
 		if (courseID) {
-			where += 'CourseID = :CourseID';
+			where += 'AND CourseID = :CourseID';
 			parameters.CourseID = parseInt(courseID);
 		}
 
 		if (userID) {
 			fields.push(
-				'COALESCE(Coursestatus.CoursestatusID, 1) AS CourseStatusID',
-				'COALESCE(Coursestatus.CoursestatusName, \'NotStarted\') AS CourseStatus'
+				'COALESCE(Coursestatus.CoursestatusID, 1) AS CoursestatusID',
+				'COALESCE(Coursestatus.CoursestatusName, \'NotStarted\') AS CoursestatusName'
 			);
 
 			table = `${CourseModel.table}
@@ -41,7 +41,6 @@ const CourseModel = {
 			AND Usercourse.UsercourseUserID = :UserID
 			LEFT JOIN Coursestatus ON Usercourse.UsercourseCoursestatusID = Coursestatus.CoursestatusID`;
 
-			where += '1=1';
 			parameters.UserID = parseInt(userID);
 		}
 		const filter = parseRequestQuery(req, [...CourseModel.mutableFields, CourseModel.idfield, 'CoursestatusName', 'CoursestatusID']);
