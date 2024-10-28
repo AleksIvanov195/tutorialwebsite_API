@@ -1,5 +1,11 @@
-const constructPreparedStatement = (fields, table, where, params) => {
+const constructPreparedStatement = (fields, table, where, params, filter) => {
+
 	let query = `SELECT ${fields.join(', ')} FROM ${table}`;
+
+	if(filter) {
+		where += filter.filters;
+		Object.assign(params, filter.parameters);
+	}
 
 	if (where) {
 		query += ` WHERE 1=1 ${where}`;
@@ -26,7 +32,7 @@ const constructInsertQuery = (fields, table, data) => {
 };
 
 const parseRequestQuery = (req, allowedFields) => {
-	console.log(allowedFields)
+	console.log(allowedFields);
 	const filter = {
 		filters: '',
 		parameters: {},

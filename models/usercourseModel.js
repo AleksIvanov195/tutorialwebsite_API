@@ -46,18 +46,15 @@ const UserCourseModel = {
 			parameters.UserID = parseInt(userID);
 		}
 
-		const filter = parseRequestQuery(req, [...UserCourseModel.mutableFields, UserCourseModel.idfield, 'CoursestatusName', 'CoursestatusID']);
-		if (filter) {
-			where += filter.filters;
-			Object.assign(parameters, filter.parameters);
-
-		}
+		const filter = parseRequestQuery(req, [...UserCourseModel.mutableFields, UserCourseModel.idfield, 'CoursestatusName', 'CoursestatusID', 'CourseName', 'CourseID']);
+		console.log(filter)
 		// Construct the SQL query string
 		const { query, params } = constructPreparedStatement(
 			fields,
 			table,
 			where,
-			parameters
+			parameters,
+			filter
 		);
 		console.log(query);
 		console.log('Parameters:', params);
