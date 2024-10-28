@@ -32,7 +32,6 @@ const constructInsertQuery = (fields, table, data) => {
 };
 
 const parseRequestQuery = (req, allowedFields) => {
-	console.log("ALLOWED" , allowedFields);
 	const filter = {
 		filters: '',
 		parameters: {},

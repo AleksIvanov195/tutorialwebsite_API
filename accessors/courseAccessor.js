@@ -6,7 +6,6 @@ const CourseAccessor = {
         const { query, params } = CourseModel.buildReadQuery(req);
         try {
             const [courses] = await database.execute(query, params);
-						console.log(courses)
             return courses;					
         } catch (error) {
 					console.log('Error getting usercourses: ', error);

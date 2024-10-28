@@ -44,7 +44,10 @@ const CourseModel = {
 			parameters.UserID = parseInt(userID);
 		}
 		const filter = parseRequestQuery(req, [...CourseModel.mutableFields, CourseModel.idfield, 'CoursestatusName', 'CoursestatusID']);
-
+		if(filter && req.query.CoursestatusName) {
+			const newfilter = 'AND COALESCE(Coursestatus.CoursestatusName, \'NotStarted\')' + filter.filters.substring(21);
+			filter.filters = newfilter;
+		}
 		// Construct the SQL query string
 		const { query, params } = constructPreparedStatement(
 			fields,
