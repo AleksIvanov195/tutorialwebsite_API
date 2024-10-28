@@ -32,7 +32,7 @@ const constructInsertQuery = (fields, table, data) => {
 };
 
 const parseRequestQuery = (req, allowedFields) => {
-	console.log(allowedFields);
+	console.log("ALLOWED" , allowedFields);
 	const filter = {
 		filters: '',
 		parameters: {},
@@ -40,8 +40,27 @@ const parseRequestQuery = (req, allowedFields) => {
 
 	for(const key in req.query) {
 		if(allowedFields.includes(key)) {
-			filter.filters += ` AND ${key}=:${key}`;
-			filter.parameters[key] = req.query[key];
+			const params = req.query[key].split(',');
+			if (params.length > 1) {
+
+				let INStatement = ` AND ${key} IN (`;
+				let placeholders = '';
+				params.forEach((param, index) => {
+					placeholders += `:${key}${index},`;
+					filter.parameters[`${key}${index}`] = param.trim();
+				});
+				// Remove last comma
+				placeholders = placeholders.replace(/,\s*$/, "");
+				// Add the placeholders to the IN
+				INStatement += `${placeholders})`;
+				// Add the statement to the filter
+				filter.filters += INStatement;
+
+			} else{
+				filter.filters += ` AND ${key}=:${key}`;
+				filter.parameters[key] = req.query[key];
+			}
+
 		}
 	}
 	return filter;
