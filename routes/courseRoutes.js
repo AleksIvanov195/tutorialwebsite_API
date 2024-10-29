@@ -5,6 +5,7 @@ const router = express.Router();
 
 
 router.get('/users/:userID', getCourses);
+router.get('/publicationstatus', getCourses);
 router.get('/:courseID', getCourses);
 router.get('/', getCourses);
 router.post('/', createCourse);

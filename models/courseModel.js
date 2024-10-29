@@ -8,6 +8,7 @@ const CourseModel = {
 		'CourseDescription',
 		'CourseCategory',
 		'CourseDatecreated',
+		'CourseCoursepublicationstatusID',
 	],
 
 	// Related tables: Usercourse and CourseStatus
@@ -24,7 +25,13 @@ const CourseModel = {
 
 		let where = '';
 		const parameters = {};
-
+		if (req.path.includes('/publicationstatus')) {
+			fields.push('CoursepublicationstatusName');
+			table += ` INNER JOIN 
+    						Coursepublicationstatus 
+								ON 
+    						Course.CourseCoursepublicationstatusID = Coursepublicationstatus.CoursepublicationstatusID`
+		}
 		if (courseID) {
 			where += 'AND CourseID = :CourseID';
 			parameters.CourseID = parseInt(courseID);
@@ -52,8 +59,7 @@ const CourseModel = {
 
 			parameters.UserID = parseInt(userID);
 		}
-		const filter = parseRequestQuery(req, [...CourseModel.mutableFields, CourseModel.idfield, 'CoursestatusName', 'CoursestatusID']);
-
+		const filter = parseRequestQuery(req, [...CourseModel.mutableFields, CourseModel.idfield, 'CoursestatusName', 'CoursestatusID', 'CoursepublicationstatusName']);
 		// Construct the SQL query string
 		const { query, params } = constructPreparedStatement(
 			fields,

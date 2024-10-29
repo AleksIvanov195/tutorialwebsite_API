@@ -20,6 +20,14 @@ const listOfEndpoints = [
 					examples: [`${API_URL}/courses/1`],
 				},
 				{
+					endpoint: '/publicationstatus',
+					description: 'Return all courses with attached publicationstatus',
+					examples: [
+						`${API_URL}/courses/publicationstatus`,
+						`${API_URL}/courses/publicationstatus?CoursepublicationstatusName=Draft`,
+					],
+				},
+				{
 					endpoint: '/users/:userID',
 					description: 'Return all courses with a statuses for the specified user',
 					examples: [
