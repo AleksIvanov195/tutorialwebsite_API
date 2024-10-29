@@ -32,22 +32,28 @@ const CourseModel = {
 
 		if (userID) {
 			fields.push(
-				'COALESCE(Coursestatus.CoursestatusID, 1) AS CoursestatusID',
-				'COALESCE(Coursestatus.CoursestatusName, \'NotStarted\') AS CoursestatusName'
+				'CoursestatusID',
+				'CoursestatusName'
 			);
 
-			table = `${CourseModel.table}
-			LEFT JOIN Usercourse ON Course.CourseID = Usercourse.UsercourseCourseID 
-			AND Usercourse.UsercourseUserID = :UserID
-			LEFT JOIN Coursestatus ON Usercourse.UsercourseCoursestatusID = Coursestatus.CoursestatusID`;
+			table = `(SELECT 
+						${CourseModel.idfield},
+						${CourseModel.mutableFields},
+						COALESCE(Coursestatus.CoursestatusID, 1) AS CoursestatusID,
+						COALESCE(Coursestatus.CoursestatusName, 'NotStarted') AS CoursestatusName
+					FROM 
+					${CourseModel.table}
+					LEFT JOIN 
+						Usercourse ON Course.CourseID = Usercourse.UsercourseCourseID 
+						AND Usercourse.UsercourseUserID = :UserID
+					LEFT JOIN 
+						Coursestatus ON Usercourse.UsercourseCoursestatusID = Coursestatus.CoursestatusID
+				) AS subquery`;
 
 			parameters.UserID = parseInt(userID);
 		}
 		const filter = parseRequestQuery(req, [...CourseModel.mutableFields, CourseModel.idfield, 'CoursestatusName', 'CoursestatusID']);
-		if(filter && req.query.CoursestatusName) {
-			const newfilter = 'AND COALESCE(Coursestatus.CoursestatusName, \'NotStarted\')' + filter.filters.substring(21);
-			filter.filters = newfilter;
-		}
+
 		// Construct the SQL query string
 		const { query, params } = constructPreparedStatement(
 			fields,
