@@ -8,7 +8,7 @@ const CourseAccessor = {
             const [courses] = await database.execute(query, params);
             return courses;					
         } catch (error) {
-					console.log('Error getting usercourses: ', error);
+					console.log('Error getting courses: ', error);
         }
     },
 		createCourse: async (courseData) => {

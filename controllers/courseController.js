@@ -1,17 +1,15 @@
 import CourseAccessor from "../accessors/courseAccessor.js";
 
 const getCourses = async (req, res) => {
-	//console.log(req.query)
 	try {
-			const userCourses = await CourseAccessor.getCourses(req);
-
-			if (!userCourses.length) return res.status(404).json({ message: 'No courses found.' });
+			const courses = await CourseAccessor.getCourses(req);
+			if (!courses.length || courses.length === 0) return res.status(404).json({ message: 'No courses found.' });
 		
-			res.status(200).json(userCourses);
+			res.status(200).json(courses);
 
 	} catch (error) {
-			console.log('Error getting usercourses: ', error)
-			res.status(500).json({ error: 'Internal Server Error' });
+			console.log('Error getting courses: ', error)
+			res.status(500).json({ error: 'Internal Server Error'});
 	}
 };
 
@@ -29,7 +27,7 @@ const createCourse = async (req, res) => {
 		});
   } catch (error) {
     console.log('Error creating course: ', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error:'Internal Server Error',});
   }
 }
 
