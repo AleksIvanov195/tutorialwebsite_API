@@ -10,6 +10,12 @@ const CourseModel = {
 		'CourseDatecreated',
 		'CourseCoursepublicationstatusID',
 	],
+	insertFields: [
+		'CourseName',
+		'CourseDescription',
+		'CourseCategory',
+		'CourseCoursepublicationstatusID',
+	],
 
 	// Related tables: Usercourse and CourseStatus
 
@@ -73,7 +79,7 @@ const CourseModel = {
 		return { query, params };
 	},
 	buildCreateQuery: (courseData) => {
-		return constructInsertQuery(CourseModel.mutableFields, CourseModel.table, courseData);
+		return constructInsertQuery(CourseModel.insertFields, CourseModel.table, courseData);
 	},
 };
 
