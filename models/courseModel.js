@@ -8,13 +8,13 @@ const CourseModel = {
 		'CourseDescription',
 		'CourseCategory',
 		'CourseDatecreated',
-		'CourseCoursepublicationstatusID',
+		'CoursePublicationstatusID',
 	],
 	insertFields: [
 		'CourseName',
 		'CourseDescription',
 		'CourseCategory',
-		'CourseCoursepublicationstatusID',
+		'CoursePublicationstatusID',
 	],
 
 	// Related tables: Usercourse and CourseStatus
@@ -35,11 +35,11 @@ const CourseModel = {
 
 		// Add publciation status if required
 		if (req.path.includes('/publicationstatus')) {
-			fields.push('CoursepublicationstatusName');
+			fields.push('PublicationstatusName');
 			table += ` INNER JOIN 
-    						Coursepublicationstatus 
+    						Publicationstatus 
 								ON 
-    						Course.CourseCoursepublicationstatusID = Coursepublicationstatus.CoursepublicationstatusID`;
+    						Course.CoursePublicationstatusID = Publicationstatus.PublicationstatusID`;
 		}
 		// Filter by course ID if it is provided
 		if (courseID) {
