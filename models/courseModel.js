@@ -19,6 +19,7 @@ const CourseModel = {
 
 	// Related tables: Usercourse and CourseStatus
 
+	// Build the query for reading data
 	buildReadQuery: (req) => {
 		// Initialisations ------------------------
 		const { userID, courseID } = req.params;
@@ -31,18 +32,22 @@ const CourseModel = {
 
 		let where = '';
 		const parameters = {};
+
+		// Add publciation status if required
 		if (req.path.includes('/publicationstatus')) {
 			fields.push('CoursepublicationstatusName');
 			table += ` INNER JOIN 
     						Coursepublicationstatus 
 								ON 
-    						Course.CourseCoursepublicationstatusID = Coursepublicationstatus.CoursepublicationstatusID`
+    						Course.CourseCoursepublicationstatusID = Coursepublicationstatus.CoursepublicationstatusID`;
 		}
+		// Filter by course ID if it is provided
 		if (courseID) {
 			where += 'AND CourseID = :CourseID';
 			parameters.CourseID = parseInt(courseID);
 		}
 
+		// Add user-related fields and join tables if user ID is provided
 		if (userID) {
 			fields.push(
 				'CoursestatusID',
@@ -65,18 +70,11 @@ const CourseModel = {
 
 			parameters.UserID = parseInt(userID);
 		}
+		// Add filters from request query if any
 		const filter = parseRequestQuery(req, [...CourseModel.mutableFields, CourseModel.idfield, 'CoursestatusName', 'CoursestatusID', 'CoursepublicationstatusName']);
-		// Construct the SQL query string
-		const { query, params } = constructPreparedStatement(
-			fields,
-			table,
-			where,
-			parameters,
-			filter
-		);
-		console.log(query);
-		console.log('Parameters:', params);
-		return { query, params };
+
+		// Construct the SQL query string and its params
+		return constructPreparedStatement(fields,	table,	where,	parameters,	filter);
 	},
 	buildCreateQuery: (courseData) => {
 		return constructInsertQuery(CourseModel.insertFields, CourseModel.table, courseData);
