@@ -14,6 +14,19 @@ class Accessor {
 			throw error;
 		}
 	}
+
+	async insertData(data) {
+		const { query, params } = this.model.buildCreateQuery(data);
+		try {
+			const [result] = await this.database.execute(query, params);
+			console.log(result);
+			return { result, idField: this.model.idfield };
+		} catch (error) {
+			console.log('Error creating course: ', error);
+			throw error;
+		}
+	}
+
 }
 
 export default Accessor;
