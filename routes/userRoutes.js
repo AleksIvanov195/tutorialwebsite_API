@@ -1,5 +1,4 @@
 import express from 'express';
-import { getUser } from '../controllers/userController.js';
 import Accessor from '../accessors/Accessor.js';
 import userModel from '../models/userModel.js';
 import database from '../database.js';
