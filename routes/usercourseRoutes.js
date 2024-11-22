@@ -1,10 +1,15 @@
 import express from 'express';
-import { getUserCourses } from '../controllers/usercourseController.js';
+import Controller from '../controllers/Controller.js';
+import Accessor from '../accessors/Accessor.js';
+import database from '../database.js';
+import UserCourseModel from '../models/usercourseModel.js';
 
+const accessor = new Accessor(UserCourseModel, database);
+const controller = new Controller(accessor);
 const router = express.Router();
 
-router.get('/users/:userID', getUserCourses);
-router.get('/:usercourseID', getUserCourses);
-router.get('/', getUserCourses);
+router.get('/users/:userID', (req, res) => controller.get(req, res));
+router.get('/:usercourseID', (req, res) => controller.get(req, res));
+router.get('/', (req, res) => controller.get(req, res));
 
 export default router;
