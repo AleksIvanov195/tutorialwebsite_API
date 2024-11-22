@@ -7,7 +7,7 @@ const courseSchema = Joi.object({
 	CourseName: Joi.string().min(3).max(255).required(),
 	CourseDescription: Joi.string().min(10).max(2000).required(),
 	CourseCategory: Joi.string().min(3).max(100).required(),
-	CourseCoursepublicationstatusID: Joi.number().integer().required(),
+	CoursePublicationstatusID: Joi.number().integer().required(),
 });
 
 export const validateCourse = (req, res, next) => {
