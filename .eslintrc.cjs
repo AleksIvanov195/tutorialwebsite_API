@@ -1,12 +1,12 @@
 module.exports = {
 	'env': {
 		'node': true,
-		'es6': true, // Enable ES6 features
+		'es6': true,
 	},
 	'extends': 'eslint:recommended',
 	'parserOptions': {
-		'ecmaVersion': 2015, // Specifically targeting ES6 (or 2021 for latest features)
-		'sourceType': 'module', // Enable ES6 module support (import/export)
+		'ecmaVersion': 2021,
+		'sourceType': 'module',
 	},
 	'rules': {
 		'brace-style': ['error', '1tbs', { 'allowSingleLine': true }],
