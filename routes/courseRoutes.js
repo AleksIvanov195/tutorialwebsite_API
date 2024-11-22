@@ -1,5 +1,4 @@
 import express from 'express';
-import { getCourses, createCourse } from '../controllers/courseController.js';
 import { validateCourse } from '../validators/courseValidator.js';
 import Accessor from '../accessors/Accessor.js';
 import Controller from '../controllers/Controller.js';

@@ -16,7 +16,6 @@ class Controller {
 	}
 
 	async post(req, res) {
-		console.log("Controller")
 		const data = req.body;
 		try {
 			const { result, idField } = await this.accessor.insertData(data);
