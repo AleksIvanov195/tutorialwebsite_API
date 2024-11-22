@@ -47,18 +47,8 @@ const UserCourseModel = {
 		}
 
 		const filter = parseRequestQuery(req, [...UserCourseModel.mutableFields, UserCourseModel.idfield, 'CoursestatusName', 'CoursestatusID', 'CourseName', 'CourseID']);
-		console.log(filter)
-		// Construct the SQL query string
-		const { query, params } = constructPreparedStatement(
-			fields,
-			table,
-			where,
-			parameters,
-			filter
-		);
-		console.log(query);
-		console.log('Parameters:', params);
-		return { query, params };
+
+		return constructPreparedStatement(fields, table, where, parameters, filter);
 	},
 };
 
