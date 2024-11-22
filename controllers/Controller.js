@@ -14,6 +14,25 @@ class Controller {
 			res.status(500).json({ error: 'Internal Server Error' });
 		}
 	}
+
+	async post(req, res) {
+		console.log("Controller")
+		const data = req.body;
+		try {
+			const { result, idField } = await this.accessor.insertData(data);
+			const createdData = {
+				[idField]: result.insertId,
+				...data,
+			};
+			res.status(201).json({
+				message: 'Success Posting',
+				course: createdData,
+			});
+		} catch (error) {
+			console.log('Error posting: ', error);
+			res.status(500).json({ error:'Internal Server Error' });
+		}
+	}
 }
 
 export default Controller;
