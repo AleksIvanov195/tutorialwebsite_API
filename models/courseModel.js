@@ -22,7 +22,8 @@ const CourseModel = {
 	// Build the query for reading data
 	buildReadQuery: (req) => {
 		// Initialisations ------------------------
-		const { userID, courseID } = req.params;
+		const userID = req.userID;
+		const { courseID } = req.params;
 		const fields = [
 			`${CourseModel.idfield}`,
 			...CourseModel.mutableFields,
@@ -51,7 +52,7 @@ const CourseModel = {
 		if (userID) {
 			fields.push(
 				'CoursestatusID',
-				'CoursestatusName'
+				'CoursestatusName',
 			);
 
 			table = `(SELECT 

@@ -1,5 +1,4 @@
 import express from 'express';
-import { validateCourse } from '../validators/courseValidator.js';
 import Accessor from '../accessors/Accessor.js';
 import AuthController from '../controllers/authController.js';
 import database from '../database.js';
