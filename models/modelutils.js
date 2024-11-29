@@ -10,7 +10,6 @@ const constructPreparedStatement = (fields, table, where, params, filter) => {
 	if (where) {
 		query += ` WHERE 1=1 ${where}`;
 	}
-
 	return { query, params };
 };
 

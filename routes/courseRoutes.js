@@ -1,5 +1,6 @@
 import express from 'express';
 import { validateCourse } from '../validators/courseValidator.js';
+import { authenticateToken, authoriseRoles } from '../middleware/auth.js';
 import Accessor from '../accessors/Accessor.js';
 import Controller from '../controllers/Controller.js';
 import database from '../database.js';
@@ -11,13 +12,13 @@ const controller = new Controller(accessor);
 const router = express.Router();
 
 
-router.get('/users/:userID', (req, res) => controller.get(req, res));
+router.get('/users', authenticateToken, (req, res) => controller.get(req, res));
 router.get('/publicationstatus', (req, res) => controller.get(req, res));
 router.get('/:courseID', (req, res) => controller.get(req, res));
 router.get('/', (req, res) => controller.get(req, res));
 
 
-router.post('/', validateCourse, (req, res) => controller.post(req, res));
+router.post('/', validateCourse, authenticateToken, authoriseRoles(['Admin', 'ContentCreator']), (req, res) => controller.post(req, res));
 
 
 export default router;

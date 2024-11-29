@@ -1,9 +1,9 @@
 import cors from 'cors';
 import express from 'express';
 import dotenv from 'dotenv';
-import userRoutes from './routes/userRoutes.js';
 import userCourseRoutes from './routes/usercourseRoutes.js';
 import courseRoutes from './routes/courseRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 import { domainRouter, defaultRouter } from './routes/defaultRouter.js';
 
 dotenv.config();
@@ -24,11 +24,12 @@ app.use(cors({
 app.use(express.json());
 
 // Routes
-app.use('/api/users', userRoutes);
+app.use('/api/users', authRoutes);
 app.use('/api/usercourses', userCourseRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/', domainRouter);
 app.use('/api/*', defaultRouter);
+
 
 // Start the server
 const PORT = process.env.PORT || 3000;
