@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-
+import dotenv from 'dotenv';
+dotenv.config();
 class AuthController {
 	constructor(accessor) {
 		this.accessor = accessor;
@@ -17,14 +18,14 @@ class AuthController {
 				...data,
 				UserPassword: hashedPassword,
 			};
-			const { result, idField } = await this.accessor.insertData(newUser);
-			const createdData = {
-				[idField]: result.insertId,
-				...data,
-			};
+			const { result } = await this.accessor.insertData(newUser);
+
+			const accessToken = jwt.sign({ userID: result.insertId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
+			const refreshToken = jwt.sign({ userID: result.insertId }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
 			res.status(201).json({
-				message: 'Success Posting',
-				course: createdData,
+				message: 'Success Registering',
+				accessToken,
+				refreshToken,
 			});
 		}catch (error) {
 			console.log('Error registering: ', error);
@@ -43,13 +44,37 @@ class AuthController {
 			if (!isPasswordValid) {
 				return res.status(401).json({ error: 'Incorrect password.' });
 			}
+			const accessToken = jwt.sign({ userID: user.UserID }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
+			const refreshToken = jwt.sign({ userID: user.UserID }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
 			res.json({
 				message: 'Login successful.',
-				user: user,
+				accessToken,
+				refreshToken,
 			});
 		}catch (error) {
 			console.log('Error logging: ', error);
 			res.status(500).json({ error:'Internal Server Error' });
+		}
+	}
+
+	async refresh(req, res) {
+		const { refreshToken } = req.body;
+		try {
+			const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+
+			const users = await this.accessor.fetchData({ body: { userID: decoded.userID } });
+			const user = users && users.length > 0 ? users[0] : null;
+
+			if (!user) {
+				return res.status(404).json({ error: 'User not found.' });
+			}
+
+			const newAccessToken = jwt.sign({ userID: user.UserID }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
+
+			res.json({ accessToken: newAccessToken });
+		} catch (error) {
+			console.log('Error refreshing token:', error);
+			res.status(403).json({ error: 'Invalid or expired refresh token.' });
 		}
 	}
 
