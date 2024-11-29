@@ -28,8 +28,8 @@ class AuthController {
 			const { result } = await this.accessor.insertData(newUser);
 
 			// Generate jwt tokens
-			const accessToken = jwt.sign({ userID: result.insertId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
-			const refreshToken = jwt.sign({ userID: result.insertId }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
+			const accessToken = jwt.sign({ userID: result.insertId, userType: newUser.UserType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
+			const refreshToken = jwt.sign({ userID: result.insertId, userType: newUser.UserType }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
 
 			// Send message and tokens.
 			res.status(201).json({
@@ -50,19 +50,18 @@ class AuthController {
 		try{
 			// Get user
 			const result = await this.accessor.fetchData(req);
-			if(!result) {
+			if(!result || result.length === 0) {
 				return res.status(404).json({ error: 'User not found.' });
 			}
 			const user = result[0];
-
 			// Verify password
 			const isPasswordValid = await bcrypt.compare(data.UserPassword, user.UserPassword);
 			if (!isPasswordValid) {
 				return res.status(401).json({ error: 'Incorrect password.' });
 			}
 			// Generate JWT tokens
-			const accessToken = jwt.sign({ userID: user.UserID }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
-			const refreshToken = jwt.sign({ userID: user.UserID }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
+			const accessToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
+			const refreshToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
 
 			// Send back message and the tokens
 			res.json({
@@ -86,13 +85,13 @@ class AuthController {
 
 			// Get the user
 			const result = await this.accessor.fetchData({ body: { userID: decoded.userID } });
-			if (!result) {
+			if (!result || result.length === 0) {
 				return res.status(404).json({ error: 'User not found.' });
 			}
 			const user = result[0];
 
 			// Generate new access token
-			const newAccessToken = jwt.sign({ userID: user.UserID }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
+			const newAccessToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
 
 			res.json({ accessToken: newAccessToken });
 		} catch (error) {
