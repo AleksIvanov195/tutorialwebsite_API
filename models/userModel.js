@@ -1,4 +1,4 @@
-import { constructPreparedStatement, parseRequestQuery } from './modelutils.js';
+import { constructPreparedStatement, constructInsertQuery, parseRequestQuery } from './modelutils.js';
 const userModel = {
 	table: 'user',
 	idfield: 'UserID',
@@ -9,9 +9,15 @@ const userModel = {
 		'UserType',
 		'UserDatecreated',
 	],
+	insertFields: [
+		'UserName',
+		'UserEmail',
+		'UserPassword',
+		'UserType',
+	],
 	buildReadQuery: (req) => {
 		// Initialisations ------------------------
-		const { userID } = req.params;
+		const { UserEmail } = req.body;
 		const fields = [
 			userModel.idfield,
 			...userModel.mutableFields,
@@ -22,14 +28,16 @@ const userModel = {
 		let where = '';
 		const parameters = {};
 
-		if (userID) {
-			where += ' AND user.UserID = :UserID';
-			parameters.UserID = parseInt(userID);
+		if (UserEmail) {
+			where += ' AND user.UserEmail = :UserEmail';
+			parameters.UserEmail = UserEmail;
 		}
 
 		const filter = parseRequestQuery(req, [...userModel.mutableFields, userModel.idfield]);
-
 		return constructPreparedStatement(fields, table, where, parameters, filter);
+	},
+	buildCreateQuery: (userData) => {
+		return constructInsertQuery(userModel.insertFields, userModel.table, userData);
 	},
 };
 
