@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import userCourseRoutes from './routes/usercourseRoutes.js';
 import courseRoutes from './routes/courseRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import coursecategoryRoutes from './routes/coursecategoryRoutes.js'
 import { domainRouter, defaultRouter } from './routes/defaultRouter.js';
 
 dotenv.config();
@@ -27,6 +28,7 @@ app.use(express.json());
 app.use('/api/users', authRoutes);
 app.use('/api/usercourses', userCourseRoutes);
 app.use('/api/courses', courseRoutes);
+app.use('/api/coursecategory', coursecategoryRoutes)
 app.use('/api/', domainRouter);
 app.use('/api/*', defaultRouter);
 
