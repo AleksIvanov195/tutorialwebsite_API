@@ -10,9 +10,9 @@ export const authenticateToken = (req, res, next) => {
 	}
 
 	try {
-		const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-		req.userID = decoded.userID;
-		req.userType = decoded.userType;
+		const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+		req.userID = decodedToken.userID;
+		req.userType = decodedToken.userType;
 		next();
 	} catch (error) {
 		return res.status(403).json({ message: 'Invalid access token' });
