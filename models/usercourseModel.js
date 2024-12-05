@@ -24,7 +24,7 @@ const UserCourseModel = {
 			'Course.CourseID',
 			'Course.CourseName',
 			'Course.CourseDescription',
-			'Course.CourseCategory',
+			'Course.CourseCoursecategoryID',
 			'Course.CourseDatecreated',
 		];
 
