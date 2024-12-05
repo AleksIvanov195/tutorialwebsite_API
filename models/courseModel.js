@@ -6,7 +6,8 @@ const CourseModel = {
 	mutableFields: [
 		'CourseName',
 		'CourseDescription',
-		'CourseCategory',
+		'CourseCoursecategoryID',
+		'CoursecategoryName',
 		'CourseDatecreated',
 		'CoursePublicationstatusID',
 	],
@@ -29,7 +30,11 @@ const CourseModel = {
 			...CourseModel.mutableFields,
 		];
 
-		let table = `${CourseModel.table}`;
+		let table = `${CourseModel.table}
+								LEFT JOIN
+								Coursecategory
+								ON
+								Course.CourseCoursecategoryID = Coursecategory.CoursecategoryID`;
 
 		let where = '';
 		const parameters = {};
@@ -54,7 +59,6 @@ const CourseModel = {
 				'CoursestatusID',
 				'CoursestatusName',
 			);
-
 			table = `(SELECT 
 						${CourseModel.idfield},
 						${CourseModel.mutableFields},
@@ -62,6 +66,8 @@ const CourseModel = {
 						COALESCE(Coursestatus.CoursestatusName, 'NotStarted') AS CoursestatusName
 					FROM 
 					${CourseModel.table}
+					LEFT JOIN
+					Coursecategory ON Course.CourseCoursecategoryID = Coursecategory.CoursecategoryID
 					LEFT JOIN 
 						Usercourse ON Course.CourseID = Usercourse.UsercourseCourseID 
 						AND Usercourse.UsercourseUserID = :UserID
