@@ -6,7 +6,7 @@ const Joi = JoiBase.extend(JoiDate);
 const courseSchema = Joi.object({
 	CourseName: Joi.string().min(3).max(255).required(),
 	CourseDescription: Joi.string().min(10).max(2000).required(),
-	CourseCategory: Joi.string().min(3).max(100).required(),
+	CourseCoursecategoryID: Joi.string().min(3).max(100).required(),
 	CoursePublicationstatusID: Joi.number().integer().required(),
 });
 

@@ -14,11 +14,9 @@ const CourseModel = {
 	insertFields: [
 		'CourseName',
 		'CourseDescription',
-		'CourseCategory',
+		'CourseCoursecategoryID',
 		'CoursePublicationstatusID',
 	],
-
-	// Related tables: Usercourse and CourseStatus
 
 	// Build the query for reading data
 	buildReadQuery: (req) => {
