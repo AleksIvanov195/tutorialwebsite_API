@@ -20,12 +20,12 @@ const UserCourseModel = {
 		const fields = [
 			UserCourseModel.idfield,
 			...UserCourseModel.mutableFields,
-			'CourseStatus.CoursestatusName',
-			'Course.CourseID',
-			'Course.CourseName',
-			'Course.CourseDescription',
-			'Course.CourseCoursecategoryID',
-			'Course.CourseDatecreated',
+			'CoursestatusName',
+			'CourseID',
+			'CourseName',
+			'CourseDescription',
+			'CourseCoursecategoryID',
+			'CourseDatecreated',
 		];
 
 		const table = [
@@ -47,7 +47,7 @@ const UserCourseModel = {
 			parameters.UserID = parseInt(userID);
 		}
 
-		const filter = parseRequestQuery(req, [...UserCourseModel.mutableFields, UserCourseModel.idfield, 'CoursestatusName', 'CoursestatusID', 'CourseName', 'CourseID']);
+		const filter = parseRequestQuery(req, fields);
 
 		return constructPreparedStatement(fields, table, where, parameters, filter);
 	},

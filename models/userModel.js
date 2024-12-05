@@ -37,7 +37,7 @@ const userModel = {
 			parameters.UserEmail = UserEmail;
 		}
 
-		const filter = parseRequestQuery(req, [...userModel.mutableFields, userModel.idfield]);
+		const filter = parseRequestQuery(req, fields);
 		return constructPreparedStatement(fields, table, where, parameters, filter);
 	},
 	buildCreateQuery: (userData) => {

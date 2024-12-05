@@ -25,6 +25,7 @@ const CourseModel = {
 		// Initialisations ------------------------
 		const userID = req.userID;
 		const { courseID } = req.params;
+
 		const fields = [
 			`${CourseModel.idfield}`,
 			...CourseModel.mutableFields,
@@ -78,7 +79,7 @@ const CourseModel = {
 			parameters.UserID = parseInt(userID);
 		}
 		// Add filters from request query if any
-		const filter = parseRequestQuery(req, [...CourseModel.mutableFields, CourseModel.idfield, 'CoursestatusName', 'CoursestatusID', 'CoursepublicationstatusName']);
+		const filter = parseRequestQuery(req, fields);
 
 		// Construct the SQL query string and its params
 		return constructPreparedStatement(fields,	table,	where,	parameters,	filter);
