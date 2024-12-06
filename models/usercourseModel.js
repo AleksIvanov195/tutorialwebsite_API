@@ -38,12 +38,12 @@ const UserCourseModel = {
 		const parameters = {};
 
 		if (usercourseID) {
-			where += ' AND Usercourse.UsercourseID = :UsercourseID';
+			where += ' AND UsercourseID = :UsercourseID';
 			parameters.UsercourseID = parseInt(usercourseID);
 		}
 
 		if (userID) {
-			where += ' AND Usercourse.UsercourseUserID = :UserID';
+			where += ' AND UsercourseUserID = :UserID';
 			parameters.UserID = parseInt(userID);
 		}
 

@@ -3,7 +3,6 @@ const coursecategoryModel = {
 	table: 'coursecategory',
 	idfield: 'CoursecategoryID',
 	mutableFields: [
-		'CoursecategoryID',
 		'CoursecategoryName',
 	],
 	insertFields: [

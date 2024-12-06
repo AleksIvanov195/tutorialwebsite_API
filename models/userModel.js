@@ -28,12 +28,12 @@ const userModel = {
 		let where = '';
 		const parameters = {};
 		if (userID) {
-			where += ' AND user.userID = :userID';
+			where += ' AND userID = :userID';
 			parameters.userID = userID;
 		}
 
 		if (UserEmail) {
-			where += ' AND user.UserEmail = :UserEmail';
+			where += ' AND UserEmail = :UserEmail';
 			parameters.UserEmail = UserEmail;
 		}
 
