@@ -31,11 +31,20 @@ class AuthController {
 			const accessToken = jwt.sign({ userID: result.insertId, userType: newUser.UserType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
 			const refreshToken = jwt.sign({ userID: result.insertId, userType: newUser.UserType }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
 
-			// Send message and tokens.
+			res.cookie('accessToken', accessToken, {
+				httpOnly: true,
+				sameSite: 'Strict',
+				maxAge: 10 * 60 * 1000,
+			});
+
+			res.cookie('refreshToken', refreshToken, {
+				httpOnly: true,
+				sameSite: 'Strict',
+				maxAge: 24 * 60 * 60 * 1000,
+			});
+
 			res.status(201).json({
 				message: 'Success Registering',
-				accessToken,
-				refreshToken,
 			});
 		}catch (error) {
 			console.log('Error registering: ', error);
@@ -63,11 +72,20 @@ class AuthController {
 			const accessToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
 			const refreshToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
 
-			// Send back message and the tokens
+			res.cookie('accessToken', accessToken, {
+				httpOnly: true,
+				sameSite: 'Strict',
+				maxAge: 10 * 60 * 1000,
+			});
+
+			res.cookie('refreshToken', refreshToken, {
+				httpOnly: true,
+				sameSite: 'Strict',
+				maxAge: 24 * 60 * 60 * 1000,
+			});
+			console.log(req.cookies)
 			res.json({
 				message: 'Login successful.',
-				accessToken,
-				refreshToken,
 			});
 		}catch (error) {
 			console.log('Error logging: ', error);
@@ -77,7 +95,10 @@ class AuthController {
 
 	async refresh(req, res) {
 		// Get Refresh token from req
-		const { refreshToken } = req.body;
+		const { refreshToken } = req.cookies;
+		if (!refreshToken) {
+			return res.status(401).json({ error: 'No refresh token.' });
+		}
 		try {
 
 			// Verify the refresh token
@@ -93,7 +114,13 @@ class AuthController {
 			// Generate new access token
 			const newAccessToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
 
-			res.json({ accessToken: newAccessToken });
+			res.cookie('accessToken', newAccessToken, {
+				httpOnly: true,
+				sameSite: 'Strict',
+				maxAge: 10 * 60 * 1000,
+			});
+
+			res.json({ message: 'Refresh successful.' });
 		} catch (error) {
 			console.log('Error refreshing token:', error);
 			res.status(403).json({ error: 'Invalid or expired refresh token.' });

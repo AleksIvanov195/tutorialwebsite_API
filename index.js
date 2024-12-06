@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 import userCourseRoutes from './routes/usercourseRoutes.js';
 import courseRoutes from './routes/courseRoutes.js';
 import authRoutes from './routes/authRoutes.js';
@@ -13,6 +14,7 @@ const app = express();
 
 const allowedDomains = process.env.ALLOWED_DOMAINS.split(',');
 
+app.use(cookieParser());
 
 app.use(cors({
 	origin: allowedDomains,
