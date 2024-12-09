@@ -15,6 +15,9 @@ export const authenticateToken = (req, res, next) => {
 		req.userType = decodedToken.userType;
 		next();
 	} catch (error) {
+		if (error.name === 'TokenExpiredError') {
+			return res.status(401).json({ message: 'Access token expired' });
+		}
 		return res.status(403).json({ message: 'Invalid access token', error });
 	}
 };

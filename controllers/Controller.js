@@ -11,7 +11,7 @@ class Controller {
 
 		} catch (error) {
 			console.log('Error getting data: ', error);
-			res.status(500).json({ error: 'Internal Server Error' });
+			res.status(500).json({ message: 'Internal Server Error' });
 		}
 	}
 
@@ -29,7 +29,7 @@ class Controller {
 			});
 		} catch (error) {
 			console.log('Error posting: ', error);
-			res.status(500).json({ error:'Internal Server Error' });
+			res.status(500).json({ message:'Internal Server Error' });
 		}
 	}
 }

@@ -13,7 +13,7 @@ class AuthController {
 		// Check if user exists
 		const existingUser = await this.accessor.fetchData(req);
 		if (existingUser && existingUser.length > 0) {
-			return res.status(400).json({ error: 'User already exists.' });
+			return res.status(400).json({ message: 'User already exists.' });
 		}
 
 		try{
@@ -48,7 +48,7 @@ class AuthController {
 			});
 		}catch (error) {
 			console.log('Error registering: ', error);
-			res.status(500).json({ error:'Internal Server Error' });
+			res.status(500).json({ message:'Internal Server Error' });
 		}
 	}
 
@@ -60,16 +60,16 @@ class AuthController {
 			// Get user
 			const result = await this.accessor.fetchData(req);
 			if(!result || result.length === 0) {
-				return res.status(404).json({ error: 'User not found.' });
+				return res.status(404).json({ message: 'User not found.' });
 			}
 			const user = result[0];
 			// Verify password
 			const isPasswordValid = await bcrypt.compare(data.UserPassword, user.UserPassword);
 			if (!isPasswordValid) {
-				return res.status(401).json({ error: 'Incorrect password.' });
+				return res.status(401).json({ message: 'Incorrect password.' });
 			}
 			// Generate JWT tokens
-			const accessToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
+			const accessToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10s' });
 			const refreshToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
 
 			res.cookie('accessToken', accessToken, {
@@ -83,13 +83,12 @@ class AuthController {
 				sameSite: 'Strict',
 				maxAge: 24 * 60 * 60 * 1000,
 			});
-			console.log(req.cookies)
 			res.json({
 				message: 'Login successful.',
 			});
 		}catch (error) {
 			console.log('Error logging: ', error);
-			res.status(500).json({ error:'Internal Server Error' });
+			res.status(500).json({ message:'Internal Server Error' });
 		}
 	}
 
@@ -97,7 +96,7 @@ class AuthController {
 		// Get Refresh token from req
 		const { refreshToken } = req.cookies;
 		if (!refreshToken) {
-			return res.status(401).json({ error: 'No refresh token.' });
+			return res.status(401).json({ message: 'No refresh token.' });
 		}
 		try {
 
@@ -107,7 +106,7 @@ class AuthController {
 			// Get the user
 			const result = await this.accessor.fetchData({ body: { userID: decoded.userID } });
 			if (!result || result.length === 0) {
-				return res.status(404).json({ error: 'User not found.' });
+				return res.status(404).json({ message: 'User not found.' });
 			}
 			const user = result[0];
 
@@ -123,7 +122,7 @@ class AuthController {
 			res.json({ message: 'Refresh successful.' });
 		} catch (error) {
 			console.log('Error refreshing token:', error);
-			res.status(403).json({ error: 'Invalid or expired refresh token.' });
+			res.status(403).json({ message: 'Invalid or expired refresh token.' });
 		}
 	}
 
