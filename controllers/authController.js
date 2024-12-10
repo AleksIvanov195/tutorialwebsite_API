@@ -70,7 +70,7 @@ class AuthController {
 			}
 			// Generate JWT tokens
 			const accessToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10s' });
-			const refreshToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
+			const refreshToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '15s' });
 
 			res.cookie('accessToken', accessToken, {
 				httpOnly: true,
@@ -111,7 +111,7 @@ class AuthController {
 			const user = result[0];
 
 			// Generate new access token
-			const newAccessToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
+			const newAccessToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10s' });
 
 			res.cookie('accessToken', newAccessToken, {
 				httpOnly: true,
@@ -123,6 +123,35 @@ class AuthController {
 		} catch (error) {
 			console.log('Error refreshing token:', error);
 			res.status(403).json({ message: 'Invalid or expired refresh token.' });
+		}
+	}
+	async logout(req, res) {
+		try {
+			res.cookie('accessToken', '', {
+				httpOnly: true,
+				sameSite: 'Strict',
+				maxAge: 0,
+			});
+			res.cookie('refreshToken', '', {
+				httpOnly: true,
+				sameSite: 'Strict',
+				maxAge: 0,
+			});
+			res.status(200).json({ message: 'Logout successful.' });
+		} catch (error) {
+			console.error('Error logging out:', error);
+			res.status(500).json({ message: 'Internal Server Error' });
+		}
+	}
+	async checkAuth(req, res) {
+		try{
+			res.json({
+				message: 'Check Auth',
+				isLoggedIn: true,
+				userType: req.userType,
+			});
+		}catch (error) {
+			res.status(500).json({ message:'Internal Server Error' });
 		}
 	}
 
