@@ -24,6 +24,7 @@ class AuthController {
 			const newUser = {
 				...data,
 				UserPassword: hashedPassword,
+				UserType: 'Learner',
 			};
 			const { result } = await this.accessor.insertData(newUser);
 

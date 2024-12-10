@@ -7,7 +7,6 @@ const authRegisterSchema = Joi.object({
 	UserName: Joi.string().min(3).max(25).required(),
 	UserEmail: Joi.string().email().required(),
 	UserPassword: Joi.string().min(3).max(100).required(),
-	UserType: Joi.string().required(),
 });
 
 const authLoginSchema = Joi.object({
