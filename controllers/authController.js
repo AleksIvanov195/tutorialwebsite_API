@@ -70,8 +70,8 @@ class AuthController {
 				return res.status(401).json({ message: 'Incorrect password.' });
 			}
 			// Generate JWT tokens
-			const accessToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10s' });
-			const refreshToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '15s' });
+			const accessToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
+			const refreshToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
 
 			res.cookie('accessToken', accessToken, {
 				httpOnly: true,
@@ -112,7 +112,7 @@ class AuthController {
 			const user = result[0];
 
 			// Generate new access token
-			const newAccessToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10s' });
+			const newAccessToken = jwt.sign({ userID: user.UserID, userType: user.UserType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
 
 			res.cookie('accessToken', newAccessToken, {
 				httpOnly: true,
