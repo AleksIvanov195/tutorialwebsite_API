@@ -33,3 +33,19 @@ export const authoriseRoles = (roles = []) => (req, res, next) => {
 	next();
 };
 
+export const authenticateRefreshToken = (req, res, next) => {
+	const refreshToken = req.cookies.refreshToken;
+	if (!refreshToken) {
+		return res.status(401).json({ message: 'Refresh token missing' });
+	}
+
+	try {
+		const decodedToken = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+		req.userID = decodedToken.userID;
+		req.userType = decodedToken.userType;
+		next();
+	} catch (error) {
+		return res.status(403).json({ message: 'Invalid refresh token', error });
+	}
+};
+
