@@ -1,4 +1,4 @@
-import { constructPreparedStatement, constructInsertQuery, parseRequestQuery } from './modelutils.js';
+import { constructPreparedStatement, constructInsertQuery, parseRequestQuery, constructUpdateQuery } from './modelutils.js';
 
 const LessonModel = {
 	table: 'Lesson',
@@ -33,9 +33,10 @@ const LessonModel = {
 		return constructPreparedStatement(fields,	table,	where,	parameters,	filter);
 	},
 	buildCreateQuery: (lessonData) => {
-		lessonData.LessonPublicationstatusID = 1;
-		console.log(lessonData)
 		return constructInsertQuery(LessonModel.insertFields, LessonModel.table, lessonData);
+	},
+	buildUpdateQuery: (id, lessonData) => {
+		return constructUpdateQuery(LessonModel.mutableFields, LessonModel.table, LessonModel.idfield, id, lessonData);
 	},
 };
 
