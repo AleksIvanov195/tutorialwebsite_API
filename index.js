@@ -5,7 +5,8 @@ import cookieParser from 'cookie-parser';
 import userCourseRoutes from './routes/usercourseRoutes.js';
 import courseRoutes from './routes/courseRoutes.js';
 import authRoutes from './routes/authRoutes.js';
-import coursecategoryRoutes from './routes/coursecategoryRoutes.js'
+import coursecategoryRoutes from './routes/coursecategoryRoutes.js';
+import lessonRoutes from './routes/lessonRoutes.js';
 import { domainRouter, defaultRouter } from './routes/defaultRouter.js';
 
 dotenv.config();
@@ -24,13 +25,14 @@ app.use(cors({
 }));
 
 // parsing JSON bodies
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
 
 // Routes
 app.use('/api/users', authRoutes);
 app.use('/api/usercourses', userCourseRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/coursecategory', coursecategoryRoutes);
+app.use('/api/lessons', lessonRoutes);
 app.use('/api/', domainRouter);
 app.use('/api/*', defaultRouter);
 

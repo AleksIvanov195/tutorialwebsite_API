@@ -25,7 +25,7 @@ class Controller {
 			};
 			res.status(201).json({
 				message: 'Success Posting',
-				course: createdData,
+				data: createdData,
 			});
 		} catch (error) {
 			console.log('Error posting: ', error);
