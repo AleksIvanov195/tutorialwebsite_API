@@ -26,6 +26,16 @@ class Accessor {
 			throw error;
 		}
 	}
+	async updateData(id, data) {
+		const { query, params } = this.model.buildUpdateQuery(id, data);
+		try {
+			const [result] = await this.database.execute(query, params);
+			return result;
+		} catch (error) {
+			console.log('Error updating data: ', error);
+			throw error;
+		}
+	}
 
 }
 

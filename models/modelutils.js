@@ -27,6 +27,22 @@ const constructInsertQuery = (fields, table, data) => {
 	const query = `INSERT INTO ${table} (${columns}) VALUES (${values})`;
 	return { query, params: parameters };
 };
+const constructUpdateQuery = (fields, table, idField, id, data) => {
+	const setList = [];
+	const params = {};
+
+	fields.forEach(field => {
+		if (data[field] !== undefined) {
+			setList.push(`${field} = :${field}`);
+			params[field] = data[field];
+		}
+	});
+
+	const query = `UPDATE ${table} SET ${setList.join(', ')} WHERE ${idField} = :${idField}`;
+	params[idField] = id;
+
+	return { query, params };
+};
 
 const parseRequestQuery = (req, allowedFields) => {
 	const filter = {
@@ -47,7 +63,7 @@ const parseRequestQuery = (req, allowedFields) => {
 					filter.parameters[`${key}${index}`] = param.trim();
 				});
 				// Remove last comma
-				placeholders = placeholders.replace(/,\s*$/, "");
+				placeholders = placeholders.replace(/,\s*$/, '');
 				// Add the placeholders to the IN
 				INStatement += `${placeholders})`;
 				// Add the statement to the filter
@@ -65,4 +81,4 @@ const parseRequestQuery = (req, allowedFields) => {
 	return filter;
 };
 
-export { constructPreparedStatement, constructInsertQuery, parseRequestQuery };
+export { constructPreparedStatement, constructInsertQuery, parseRequestQuery, constructUpdateQuery };

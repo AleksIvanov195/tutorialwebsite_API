@@ -32,6 +32,22 @@ class Controller {
 			res.status(500).json({ message:'Internal Server Error' });
 		}
 	}
+
+	async put(req, res) {
+		const id = req.params.id;
+		const data = req.body;
+		try {
+			const result = await this.accessor.updateData(id, data);
+			if (result.affectedRows === 0) return res.status(404).json({ message: 'No data found to update.' });
+			res.status(200).json({
+				message: 'Success Updating',
+				data: { id, ...data },
+			});
+		} catch (error) {
+			console.log('Error updating: ', error);
+			res.status(500).json({ message: 'Internal Server Error' });
+		}
+	}
 }
 
 export default Controller;
