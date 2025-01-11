@@ -1,4 +1,4 @@
-import { constructInsertQuery, constructUpdateQuery } from './modelutils.js';
+import { constructInsertQuery, constructUpdateQuery, constructDeleteQuery } from './modelutils.js';
 class Model {
 	constructor(model) {
 		this.table = model.table;
@@ -16,8 +16,8 @@ class Model {
 		return constructUpdateQuery(this.mutableFields, this.table, this.idField, id, data);
 	}
 
-	buildDeteleQuery(id) {
-		console.log('To delete ' + id);
+	buildDeleteQuery(id) {
+		return constructDeleteQuery(this.table, this.idField, id);
 	}
 
 }
