@@ -2,7 +2,7 @@ import { constructPreparedStatement, constructInsertQuery, parseRequestQuery } f
 
 const CourseModel = {
 	table: 'Course',
-	idfield: 'CourseID',
+	idField: 'CourseID',
 	mutableFields: [
 		'CourseName',
 		'CourseDescription',
@@ -25,7 +25,7 @@ const CourseModel = {
 		const { courseID } = req.params;
 
 		const fields = [
-			`${CourseModel.idfield}`,
+			`${CourseModel.idField}`,
 			...CourseModel.mutableFields,
 		];
 
@@ -59,7 +59,7 @@ const CourseModel = {
 				'CoursestatusName',
 			);
 			table = `(SELECT 
-						${CourseModel.idfield},
+						${CourseModel.idField},
 						${CourseModel.mutableFields},
 						COALESCE(Coursestatus.CoursestatusID, 1) AS CoursestatusID,
 						COALESCE(Coursestatus.CoursestatusName, 'NotStarted') AS CoursestatusName

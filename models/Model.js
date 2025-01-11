@@ -4,15 +4,16 @@ class Model {
 		this.table = model.table;
 		this.idField = model.idField;
 		this.mutableFields = model.mutableFields;
+		this.insertFields = model.insertFields;
 		this.buildReadQuery = model.buildReadQuery;
 	}
 
 	buildCreateQuery(data) {
-		return constructInsertQuery(this.model.insertFields, this.model.table, data);
+		return constructInsertQuery(this.insertFields, this.table, data);
 	}
 
 	buildUpdateQuery(id, data) {
-		return constructUpdateQuery(this.model.mutableFields, this.model.table, this.model.idfield, id, data);
+		return constructUpdateQuery(this.mutableFields, this.table, this.idField, id, data);
 	}
 
 	buildDeteleQuery(id) {

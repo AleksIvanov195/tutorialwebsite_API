@@ -1,8 +1,8 @@
-import { constructPreparedStatement, constructInsertQuery, parseRequestQuery, constructUpdateQuery } from './modelutils.js';
+import { constructPreparedStatement, parseRequestQuery } from './modelutils.js';
 
 const LessonModel = {
 	table: 'Lesson',
-	idfield: 'LessonID',
+	idField: 'LessonID',
 	mutableFields: [
 		'LessonName',
 		'LessonDescription',
@@ -18,7 +18,7 @@ const LessonModel = {
 
 	buildReadQuery: (req) => {
 		const fields = [
-			`${LessonModel.idfield}`,
+			`${LessonModel.idField}`,
 			...LessonModel.mutableFields,
 		];
 
@@ -31,12 +31,6 @@ const LessonModel = {
 
 		// Construct the SQL query string and its params
 		return constructPreparedStatement(fields,	table,	where,	parameters,	filter);
-	},
-	buildCreateQuery: (lessonData) => {
-		return constructInsertQuery(LessonModel.insertFields, LessonModel.table, lessonData);
-	},
-	buildUpdateQuery: (id, lessonData) => {
-		return constructUpdateQuery(LessonModel.mutableFields, LessonModel.table, LessonModel.idfield, id, lessonData);
 	},
 };
 

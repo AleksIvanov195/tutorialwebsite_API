@@ -20,7 +20,7 @@ class Accessor {
 		try {
 			const [result] = await this.database.execute(query, params);
 			console.log(result);
-			return { result, idField: this.model.idfield };
+			return { result, idField: this.model.idField };
 		} catch (error) {
 			console.log('Error creating course: ', error);
 			throw error;

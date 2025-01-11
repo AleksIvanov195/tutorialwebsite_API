@@ -2,7 +2,7 @@ import { constructPreparedStatement, parseRequestQuery } from './modelutils.js';
 
 const UserCourseModel = {
 	table: 'Usercourse',
-	idfield: 'UsercourseID',
+	idField: 'UsercourseID',
 	mutableFields: [
 		'UsercourseUserID',
 		'UsercourseCourseID',
@@ -18,7 +18,7 @@ const UserCourseModel = {
 		const userID = req.userID;
 		const { usercourseID } = req.params;
 		const fields = [
-			UserCourseModel.idfield,
+			UserCourseModel.idField,
 			...UserCourseModel.mutableFields,
 			'UsercontentstatusName',
 			'CourseID',

@@ -1,7 +1,7 @@
 import { constructPreparedStatement, constructInsertQuery, parseRequestQuery } from './modelutils.js';
 const coursecategoryModel = {
 	table: 'coursecategory',
-	idfield: 'CoursecategoryID',
+	idField: 'CoursecategoryID',
 	mutableFields: [
 		'CoursecategoryName',
 	],
@@ -12,7 +12,7 @@ const coursecategoryModel = {
 	buildReadQuery: (req) => {
 		// Initialisations ------------------------
 		const fields = [
-			coursecategoryModel.idfield,
+			coursecategoryModel.idField,
 			...coursecategoryModel.mutableFields,
 		];
 

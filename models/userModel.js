@@ -1,7 +1,7 @@
 import { constructPreparedStatement, constructInsertQuery, parseRequestQuery } from './modelutils.js';
 const userModel = {
 	table: 'user',
-	idfield: 'UserID',
+	idField: 'UserID',
 	mutableFields: [
 		'UserName',
 		'UserEmail',
@@ -19,7 +19,7 @@ const userModel = {
 		// Initialisations ------------------------
 		const { UserEmail, userID } = req.body;
 		const fields = [
-			userModel.idfield,
+			userModel.idField,
 			...userModel.mutableFields,
 		];
 
