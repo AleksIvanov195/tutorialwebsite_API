@@ -8,10 +8,10 @@ const UserCourseModel = {
 		'UsercourseCourseID',
 		'UsercourseStartdate',
 		'UsercourseCompletionDate',
-		'UsercourseCoursestatusID',
+		'UsercourseUsercontentstatusID',
 	],
 
-	// Related tables: Course and CourseStatus
+	// Related tables: Course and Usercontentstatus
 
 	buildReadQuery: (req) => {
 		// Initialisations ------------------------
@@ -20,7 +20,7 @@ const UserCourseModel = {
 		const fields = [
 			UserCourseModel.idfield,
 			...UserCourseModel.mutableFields,
-			'CoursestatusName',
+			'UsercontentstatusName',
 			'CourseID',
 			'CourseName',
 			'CourseDescription',
@@ -31,7 +31,7 @@ const UserCourseModel = {
 		const table = [
 			`${UserCourseModel.table}
 			INNER JOIN Course ON Usercourse.UsercourseCourseID = Course.CourseID
-			INNER JOIN Coursestatus ON Usercourse.UsercourseCoursestatusID = Coursestatus.CoursestatusID`,
+			INNER JOIN Usercontentstatus ON Usercourse.UsercourseUsercontentstatusID = Usercontentstatus.UsercontentstatusID`,
 		];
 
 		let where = '';
