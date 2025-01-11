@@ -1,4 +1,4 @@
-const constructPreparedStatement = (fields, table, where, params, filter) => {
+export const constructPreparedStatement = (fields, table, where, params, filter) => {
 
 	let query = `SELECT ${fields.join(', ')} FROM ${table}`;
 
@@ -13,7 +13,7 @@ const constructPreparedStatement = (fields, table, where, params, filter) => {
 	return { query, params };
 };
 
-const constructInsertQuery = (fields, table, data) => {
+export const constructInsertQuery = (fields, table, data) => {
 
 	const columns = fields.join(', ');
 	const values = fields.map(field => `:${field}`).join(', ');
@@ -27,7 +27,7 @@ const constructInsertQuery = (fields, table, data) => {
 	const query = `INSERT INTO ${table} (${columns}) VALUES (${values})`;
 	return { query, params: parameters };
 };
-const constructUpdateQuery = (fields, table, idField, id, data) => {
+export const constructUpdateQuery = (fields, table, idField, id, data) => {
 	const setList = [];
 	const params = {};
 
@@ -44,7 +44,16 @@ const constructUpdateQuery = (fields, table, idField, id, data) => {
 	return { query, params };
 };
 
-const parseRequestQuery = (req, allowedFields) => {
+export const constructDeleteQuery = (table, idField, id) => {
+	const params = {};
+	params[idField] = id;
+
+	const query = `DELETE FROM ${table} WHERE ${idField} = :${idField}`;
+	return { query, params };
+
+};
+
+export const parseRequestQuery = (req, allowedFields) => {
 	const filter = {
 		filters: '',
 		parameters: {},
@@ -80,5 +89,3 @@ const parseRequestQuery = (req, allowedFields) => {
 	}
 	return filter;
 };
-
-export { constructPreparedStatement, constructInsertQuery, parseRequestQuery, constructUpdateQuery };
