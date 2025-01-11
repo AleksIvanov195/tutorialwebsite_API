@@ -17,8 +17,9 @@ class Controller {
 
 	async post(req, res) {
 		const data = req.body;
+		const userID = req.userID;
 		try {
-			const { result, idField } = await this.accessor.insertData(data);
+			const { result, idField } = await this.accessor.insertData(data, userID);
 			const createdData = {
 				[idField]: result.insertId,
 				...data,

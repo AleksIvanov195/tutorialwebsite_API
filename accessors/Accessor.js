@@ -15,8 +15,8 @@ class Accessor {
 		}
 	}
 
-	async insertData(data) {
-		const { query, params } = this.model.buildCreateQuery(data);
+	async insertData(data, userID) {
+		const { query, params } = this.model.buildCreateQuery(data, userID);
 		try {
 			const [result] = await this.database.execute(query, params);
 			console.log(result);
