@@ -5,8 +5,10 @@ import Accessor from '../accessors/Accessor.js';
 import Controller from '../controllers/Controller.js';
 import database from '../database.js';
 import courseModel from '../models/courseModel.js';
+import Model from '../models/Model.js';
 
-const accessor = new Accessor(courseModel, database);
+const model = new Model(courseModel);
+const accessor = new Accessor(model, database);
 const controller = new Controller(accessor);
 
 const router = express.Router();

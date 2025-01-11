@@ -3,9 +3,11 @@ import Controller from '../controllers/Controller.js';
 import Accessor from '../accessors/Accessor.js';
 import { authenticateToken } from '../middleware/auth.js';
 import database from '../database.js';
-import UserCourseModel from '../models/usercourseModel.js';
+import userCourseModel from '../models/usercourseModel.js';
+import Model from '../models/Model.js';
 
-const accessor = new Accessor(UserCourseModel, database);
+const model = new Model(userCourseModel);
+const accessor = new Accessor(model, database);
 const controller = new Controller(accessor);
 const router = express.Router();
 
