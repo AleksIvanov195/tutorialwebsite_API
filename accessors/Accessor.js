@@ -37,6 +37,18 @@ class Accessor {
 		}
 	}
 
+	async deleteData(id) {
+		const { query, params } = this.model.buildDeleteQuery(id);
+		try {
+			const [result] = await this.database.execute(query, params);
+			return result;
+		} catch (error) {
+			console.log('Error deleting data: ', error);
+			throw error;
+		}
+
+	}
+
 }
 
 export default Accessor;

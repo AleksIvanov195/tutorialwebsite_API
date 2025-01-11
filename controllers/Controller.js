@@ -48,6 +48,20 @@ class Controller {
 			res.status(500).json({ message: 'Internal Server Error' });
 		}
 	}
+
+	async delete(req, res) {
+		const id = req.params.id;
+		try {
+			const result = await this.accessor.deleteData(id);
+			if (result.affectedRows === 0) return res.status(404).json({ message: 'No data found to delete.' });
+			res.status(200).json({ message: 'Success Deleting' });
+		} catch (error) {
+			console.log('Error deleting: ', error);
+			res.status(500).json({ message: 'Internal Server Error' });
+		}
+	}
+
+
 }
 
 export default Controller;
