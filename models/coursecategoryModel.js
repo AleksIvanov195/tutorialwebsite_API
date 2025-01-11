@@ -24,9 +24,6 @@ const coursecategoryModel = {
 		const filter = parseRequestQuery(req, fields);
 		return constructPreparedStatement(fields, table, where, parameters, filter);
 	},
-	buildCreateQuery: (coursecategoryData) => {
-		return constructInsertQuery(coursecategoryModel.insertFields, coursecategoryModel.table, coursecategoryData);
-	},
 };
 
 export default coursecategoryModel;

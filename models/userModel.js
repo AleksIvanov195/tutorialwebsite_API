@@ -40,9 +40,6 @@ const userModel = {
 		const filter = parseRequestQuery(req, fields);
 		return constructPreparedStatement(fields, table, where, parameters, filter);
 	},
-	buildCreateQuery: (userData) => {
-		return constructInsertQuery(userModel.insertFields, userModel.table, userData);
-	},
 };
 
 export default userModel;

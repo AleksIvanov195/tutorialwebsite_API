@@ -82,9 +82,6 @@ const CourseModel = {
 		// Construct the SQL query string and its params
 		return constructPreparedStatement(fields,	table,	where,	parameters,	filter);
 	},
-	buildCreateQuery: (courseData) => {
-		return constructInsertQuery(CourseModel.insertFields, CourseModel.table, courseData);
-	},
 };
 
 export default CourseModel;
