@@ -5,10 +5,14 @@ class Model {
 		this.idField = model.idField;
 		this.mutableFields = model.mutableFields;
 		this.insertFields = model.insertFields;
+		this.creatorField = model.creatorField;
 		this.buildReadQuery = model.buildReadQuery;
 	}
 
-	buildCreateQuery(data) {
+	buildCreateQuery(data, userID) {
+		if (this.creatorField) {
+			data[this.creatorField] = userID;
+		}
 		return constructInsertQuery(this.insertFields, this.table, data);
 	}
 
