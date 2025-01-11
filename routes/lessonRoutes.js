@@ -18,4 +18,6 @@ router.get('/', (req, res) => controller.get(req, res));
 router.post('/', authenticateToken, authoriseRoles(['ContentCreator']), (req, res) => controller.post(req, res));
 
 router.put('/:id', authenticateToken, authoriseRoles(['ContentCreator']), (req, res) => controller.put(req, res));
+
+router.delete('/:id', authenticateToken, authoriseRoles(['ContentCreator']), (req, res) => controller.delete(req, res));
 export default router;
