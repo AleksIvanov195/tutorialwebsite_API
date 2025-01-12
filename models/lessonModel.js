@@ -8,6 +8,7 @@ const LessonModel = {
 		'LessonDescription',
 		'LessonContentJSON',
 		'LessonPublicationstatusID',
+		'LessoncreatorUserID',
 	],
 	insertFields: [
 		'LessonName',
