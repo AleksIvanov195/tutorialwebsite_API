@@ -1,6 +1,6 @@
 import { constructPreparedStatement, constructInsertQuery, parseRequestQuery } from './modelutils.js';
 const coursecategoryModel = {
-	table: 'coursecategory',
+	table: 'Coursecategory',
 	idField: 'CoursecategoryID',
 	mutableFields: [
 		'CoursecategoryName',

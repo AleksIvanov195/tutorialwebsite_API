@@ -1,6 +1,6 @@
 import { constructPreparedStatement, constructInsertQuery, parseRequestQuery } from './modelutils.js';
 const userModel = {
-	table: 'user',
+	table: 'User',
 	idField: 'UserID',
 	mutableFields: [
 		'UserName',
