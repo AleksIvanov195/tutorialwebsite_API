@@ -10,6 +10,10 @@ const dbConfig = {
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   namedPlaceholders: true,
+	waitForConnections: true,
+  connectionLimit: 10,
+  enableKeepAlive: true,
+  keepAliveInitialDelay: 0,
 };
 
 let database = null;
