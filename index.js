@@ -15,14 +15,21 @@ const app = express();
 
 const allowedDomains = process.env.ALLOWED_DOMAINS.split(',');
 
-app.use(cookieParser());
-
 app.use(cors({
-	origin: allowedDomains,
-	methods: 'GET,POST,PUT,DELETE',
+	origin: function(origin, callback) {
+		// Allow same-origin requests
+		if (!origin || allowedDomains.indexOf(origin) !== -1) {
+			callback(null, true);
+		} else {
+			callback(new Error('Not allowed by CORS'));
+		}
+	},
+	methods: 'GET, POST, PUT, DELETE',
 	credentials: true,
 	allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 }));
+
+app.use(cookieParser());
 
 // parsing JSON bodies
 app.use(express.json({ limit: '50mb' }));
