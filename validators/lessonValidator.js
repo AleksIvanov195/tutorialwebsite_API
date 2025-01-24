@@ -14,7 +14,7 @@ const updateContentStatusSchema = Joi.object({
 });
 
 const updateAllSchema = Joi.object({
-	LessonName: Joi.string().min(5).max(255).required(),
+	LessonName: Joi.string().min(3).max(255).required(),
 	LessonDescription: Joi.string().min(10).max(2000).required(),
 	LessonContentJSON: Joi.string().required(),
 	LessonPublicationstatusID: Joi.number().integer().required(),
