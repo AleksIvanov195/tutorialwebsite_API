@@ -22,7 +22,7 @@ class Accessor {
 			console.log(result);
 			return { result, idField: this.model.idField };
 		} catch (error) {
-			console.log('Error creating course: ', error);
+			console.log('Error inserting data: ', error);
 			throw error;
 		}
 	}

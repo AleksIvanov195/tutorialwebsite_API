@@ -11,7 +11,7 @@ class Controller {
 
 		} catch (error) {
 			console.log('Error getting data: ', error);
-			res.status(500).json({ message: 'Internal Server Error' });
+			res.status(500).json({ message: 'Internal Server Error, record could not be fetched.' });
 		}
 	}
 
@@ -30,7 +30,7 @@ class Controller {
 			});
 		} catch (error) {
 			console.log('Error posting: ', error);
-			res.status(500).json({ message:'Internal Server Error' });
+			res.status(500).json({ message:'Internal Server Error, record could not be uploaded.' });
 		}
 	}
 
@@ -46,7 +46,7 @@ class Controller {
 			});
 		} catch (error) {
 			console.log('Error updating: ', error);
-			res.status(500).json({ message: 'Internal Server Error' });
+			res.status(500).json({ message: 'Internal Server Error, record could not be updated.' });
 		}
 	}
 
@@ -58,7 +58,7 @@ class Controller {
 			res.status(200).json({ message: 'Success Deleting' });
 		} catch (error) {
 			console.log('Error deleting: ', error);
-			res.status(500).json({ message: 'Internal Server Error' });
+			res.status(500).json({ message: 'Internal Server Error, record could not be deleted.' });
 		}
 	}
 
