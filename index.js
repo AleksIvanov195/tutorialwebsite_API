@@ -8,6 +8,7 @@ import authRoutes from './routes/authRoutes.js';
 import coursecategoryRoutes from './routes/coursecategoryRoutes.js';
 import lessonRoutes from './routes/lessonRoutes.js';
 import quizRoutes from './routes/quizRoutes.js';
+import questionRoutes from './routes/questionRoutes.js';
 import { domainRouter, defaultRouter } from './routes/defaultRouter.js';
 
 dotenv.config();
@@ -42,6 +43,7 @@ app.use('/api/courses', courseRoutes);
 app.use('/api/coursecategory', coursecategoryRoutes);
 app.use('/api/lessons', lessonRoutes);
 app.use('/api/quizzes', quizRoutes);
+app.use('/api/questions', questionRoutes);
 app.use('/api/', domainRouter);
 app.use('/api/*', defaultRouter);
 
