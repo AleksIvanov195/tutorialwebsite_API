@@ -92,8 +92,7 @@ export const parseRequestQuery = (req, allowedFields) => {
 
 		}
 	}
-
-	if(req.query.orderby) {
+	if(req.query && req.query.orderby) {
 		// Format should be field,sortby - ID,DESC
 		const orderby = req.query.orderby.split(',');
 		const field = orderby[0];
