@@ -7,11 +7,13 @@ const QuestionModel = {
 		'QuestionText',
 		'QuestionFeedbacktext',
 		'QuestionDatecreated',
+		'QuestionOrdernumber',
 		'QuestionQuizID',
 	],
 	insertFields: [
 		'QuestionText',
 		'QuestionFeedbacktext',
+		'QuestionOrdernumber',
 		'QuestionQuizID',
 	],
 

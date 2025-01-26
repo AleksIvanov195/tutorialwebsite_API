@@ -19,21 +19,21 @@ const quizModel = {
 	creatorField: 'QuizcreatorUserID',
 
 	buildReadQuery: (req) => {
-		// const userID = req.userID;
+		const userID = req.userID;
 		const fields = [
 			`${quizModel.idField}`,
 			...quizModel.mutableFields,
 		];
 
 		const table = quizModel.table;
-		const where = '';
+		let where = '';
 		const parameters = {};
 
-		/* if (req.path.includes('/mylessons')) {
-			// Show lessons created by the specified creator.
-			where += 'AND LessoncreatorUserID = :LessoncreatorUserID';
-			parameters.LessoncreatorUserID = parseInt(userID);
-		}*/
+		if (req.path.includes('/myquizzes')) {
+			// Show quizzes created by the specified creator.
+			where += 'AND QuizcreatorUserID = :QuizcreatorUserID';
+			parameters.QuizcreatorUserID = parseInt(userID);
+		}
 
 
 		const filter = parseRequestQuery(req, fields);
