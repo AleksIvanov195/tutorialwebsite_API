@@ -10,6 +10,10 @@ export const constructPreparedStatement = (fields, table, where, params, filter)
 	if (where) {
 		query += ` WHERE 1=1 ${where}`;
 	}
+
+	if(filter.orderby) {
+		query += filter.orderby;
+	}
 	return { query, params };
 };
 
@@ -57,6 +61,7 @@ export const parseRequestQuery = (req, allowedFields) => {
 	const filter = {
 		filters: '',
 		parameters: {},
+		orderby: '',
 	};
 
 	for(const key in req.query) {
@@ -85,6 +90,16 @@ export const parseRequestQuery = (req, allowedFields) => {
 				filter.parameters[key] = req.query[key];
 			}
 
+		}
+	}
+
+	if(req.query.orderby) {
+		// Format should be field,sortby - ID,DESC
+		const orderby = req.query.orderby.split(',');
+		const field = orderby[0];
+		const sortby = orderby[1] && orderby[1].toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+		if (allowedFields.includes(field)) {
+			filter.orderby = ` ORDER BY ${field} ${sortby}`;
 		}
 	}
 	return filter;
