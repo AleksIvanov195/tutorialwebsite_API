@@ -11,7 +11,8 @@ const controller = new Controller(accessor);
 
 const router = express.Router();
 
-router.get('/', (req, res) => controller.get(req, res));
 router.get('/:id', (req, res) => controller.get(req, res));
+router.get('/', (req, res) => controller.get(req, res));
+
 
 export default router;

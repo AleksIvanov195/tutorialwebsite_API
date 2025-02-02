@@ -12,8 +12,8 @@ const controller = new Controller(accessor);
 
 const router = express.Router();
 
-router.get('/', authenticateToken, (req, res) => controller.get(req, res));
 router.get('/:id', authenticateToken, (req, res) => controller.get(req, res));
+router.get('/', authenticateToken, (req, res) => controller.get(req, res));
 
 router.post('/', authenticateToken, authoriseRoles(['ContentCreator']), (req, res) => controller.post(req, res));
 
