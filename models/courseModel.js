@@ -53,16 +53,16 @@ const CourseModel = {
 		}
 
 		// Add user-related fields and join tables if user ID is provided
-		if (userID) {
+		if (req.path.includes('/users')) {
 			fields.push(
-				'CoursestatusID',
-				'CoursestatusName',
+				'UsercontentstatusID',
+				'UsercontentstatusName',
 			);
 			table = `(SELECT 
 						${CourseModel.idField},
 						${CourseModel.mutableFields},
-						COALESCE(Coursestatus.CoursestatusID, 1) AS CoursestatusID,
-						COALESCE(Coursestatus.CoursestatusName, 'NotStarted') AS CoursestatusName
+						COALESCE(Usercontentstatus.UsercontentstatusID, 1) AS UsercontentstatusID,
+						COALESCE(Usercontentstatus.UsercontentstatusName, 'NotStarted') AS UsercontentstatusName
 					FROM 
 					${CourseModel.table}
 					LEFT JOIN
@@ -71,7 +71,7 @@ const CourseModel = {
 						Usercourse ON Course.CourseID = Usercourse.UsercourseCourseID 
 						AND Usercourse.UsercourseUserID = :UserID
 					LEFT JOIN 
-						Coursestatus ON Usercourse.UsercourseCoursestatusID = Coursestatus.CoursestatusID
+						Usercontentstatus ON Usercourse.UsercourseUsercontentstatusID = Usercontentstatus.UsercontentstatusID
 				) AS subquery`;
 
 			parameters.UserID = parseInt(userID);
