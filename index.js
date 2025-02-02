@@ -41,7 +41,7 @@ app.use(express.json({ limit: '50mb' }));
 app.use('/api/users', authRoutes);
 app.use('/api/usercourses', userCourseRoutes);
 app.use('/api/courses', courseRoutes);
-app.use('/api/coursecategory', coursecategoryRoutes);
+app.use('/api/coursecategories', coursecategoryRoutes);
 app.use('/api/lessons', lessonRoutes);
 app.use('/api/quizzes', quizRoutes);
 app.use('/api/questions', questionRoutes);

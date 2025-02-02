@@ -10,7 +10,8 @@ const coursecategoryModel = {
 		'CoursecategoryName',
 	],
 	buildReadQuery: (req) => {
-		// Initialisations ------------------------
+		const { id: courseCategoryID} = req.params;
+
 		const fields = [
 			coursecategoryModel.idField,
 			...coursecategoryModel.mutableFields,
@@ -20,6 +21,11 @@ const coursecategoryModel = {
 
 		let where = '';
 		const parameters = {};
+
+		if(courseCategoryID) {
+			where += 'AND CoursecategoryID = :CoursecategoryID';
+			parameters.CoursecategoryID = parseInt(courseCategoryID);
+		}
 
 		const filter = parseRequestQuery(req, fields);
 		return constructPreparedStatement(fields, table, where, parameters, filter);
