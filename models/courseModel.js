@@ -22,7 +22,7 @@ const CourseModel = {
 	buildReadQuery: (req) => {
 		// Initialisations ------------------------
 		const userID = req.userID;
-		const { courseID } = req.params;
+		const { id: courseID } = req.params;
 
 		const fields = [
 			`${CourseModel.idField}`,

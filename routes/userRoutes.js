@@ -11,6 +11,6 @@ const controller = new Controller(accessor);
 
 const router = express.Router();
 
-router.get('/:userID', (req, res) => controller.get(req, res));
+router.get('/:id', (req, res) => controller.get(req, res));
 
 export default router;

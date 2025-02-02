@@ -21,6 +21,7 @@ const LessonModel = {
 
 	buildReadQuery: (req) => {
 		const userID = req.userID;
+		const { id: lessonID } = req.params;
 		const fields = [
 			`${LessonModel.idField}`,
 			...LessonModel.mutableFields,
@@ -29,6 +30,11 @@ const LessonModel = {
 		const table = LessonModel.table;
 		let where = '';
 		const parameters = {};
+
+		if(lessonID) {
+			where += 'AND LessonID = :LessonID';
+			parameters.LessonID = parseInt(lessonID);
+		}
 
 		if (req.path.includes('/mylessons')) {
 			// Show lessons created by the specified creator.

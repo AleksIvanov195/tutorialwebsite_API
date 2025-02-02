@@ -8,16 +8,19 @@ const QuestionModel = {
 		'QuestionFeedbacktext',
 		'QuestionDatecreated',
 		'QuestionOrdernumber',
+		'QuestionType',
 		'QuestionQuizID',
 	],
 	insertFields: [
 		'QuestionText',
 		'QuestionFeedbacktext',
 		'QuestionOrdernumber',
+		'QuestionType',
 		'QuestionQuizID',
 	],
 
 	buildReadQuery: (req) => {
+		const { id: questionID } = req.params;
 		const fields = [
 			`${QuestionModel.idField}`,
 			...QuestionModel.mutableFields,
@@ -25,8 +28,12 @@ const QuestionModel = {
 
 		const table = QuestionModel.table;
 		let where = '';
-
 		const parameters = {};
+
+		if (questionID) {
+			where += 'AND QuestionID = :QuestionID';
+			parameters.QuestionID = parseInt(questionID);
+		}
 		const filter = parseRequestQuery(req, fields);
 
 		// Construct the SQL query string and its params

@@ -14,6 +14,7 @@ const controller = new Controller(accessor);
 const router = express.Router();
 
 router.get('/', authenticateToken, (req, res) => controller.get(req, res));
+router.get('/:id', authenticateToken, (req, res) => controller.get(req, res));
 router.get('/mylessons', authenticateToken, (req, res) => controller.get(req, res));
 
 router.post('/', validateLesson, authenticateToken, authoriseRoles(['ContentCreator']), (req, res) => controller.post(req, res));

@@ -16,7 +16,7 @@ const UserCourseModel = {
 	buildReadQuery: (req) => {
 		// Initialisations ------------------------
 		const userID = req.userID;
-		const { usercourseID } = req.params;
+		const { id:usercourseID } = req.params;
 		const fields = [
 			UserCourseModel.idField,
 			...UserCourseModel.mutableFields,
