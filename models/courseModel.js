@@ -1,4 +1,4 @@
-import { constructPreparedStatement, constructInsertQuery, parseRequestQuery } from './modelutils.js';
+import { constructPreparedStatement, parseRequestQuery } from './modelutils.js';
 
 const CourseModel = {
 	table: 'Course',

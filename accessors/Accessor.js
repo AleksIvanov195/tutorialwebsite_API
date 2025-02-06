@@ -19,7 +19,6 @@ class Accessor {
 		const { query, params } = this.model.buildCreateQuery(data, userID);
 		try {
 			const [result] = await this.database.execute(query, params);
-			console.log(result);
 			return { result, idField: this.model.idField };
 		} catch (error) {
 			console.log('Error inserting data: ', error);

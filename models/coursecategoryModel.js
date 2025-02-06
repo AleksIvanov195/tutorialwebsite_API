@@ -1,12 +1,12 @@
-import { constructPreparedStatement, constructInsertQuery, parseRequestQuery } from './modelutils.js';
+import { constructPreparedStatement, parseRequestQuery } from './modelutils.js';
 const coursecategoryModel = {
 	table: 'Coursecategory',
 	idField: 'CoursecategoryID',
 	mutableFields: [
+		'CoursecategoryID',
 		'CoursecategoryName',
 	],
 	insertFields: [
-		'CoursecategoryID',
 		'CoursecategoryName',
 	],
 	buildReadQuery: (req) => {

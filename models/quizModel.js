@@ -53,9 +53,7 @@ const quizModel = {
 		const filter = parseRequestQuery(req, fields);
 
 		// Construct the SQL query string and its params
-		console.log(constructPreparedStatement(fields,	table,	where,	parameters,	filter))
 		return constructPreparedStatement(fields,	table,	where,	parameters,	filter);
-		
 	},
 };
 
