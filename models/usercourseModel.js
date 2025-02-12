@@ -7,7 +7,12 @@ const UserCourseModel = {
 		'UsercourseUserID',
 		'UsercourseCourseID',
 		'UsercourseStartdate',
-		'UsercourseCompletionDate',
+		'UsercourseCompletiondate',
+		'UsercourseUsercontentstatusID',
+	],
+	insertFields: [
+		'UsercourseUserID',
+		'UsercourseCourseID',
 		'UsercourseUsercontentstatusID',
 	],
 

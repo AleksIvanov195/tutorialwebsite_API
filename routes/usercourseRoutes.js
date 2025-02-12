@@ -15,5 +15,11 @@ router.get('/users', authenticateToken, (req, res) => controller.get(req, res));
 router.get('/:id', (req, res) => controller.get(req, res));
 router.get('/', (req, res) => controller.get(req, res));
 
+router.post('/', authenticateToken, (req, res) => controller.post(req, res));
 
+router.put('/:id/complete', authenticateToken, (req, res) => controller.put(req, res));
+router.put('/:id', authenticateToken, (req, res) => controller.put(req, res));
+
+
+router.delete('/:id', authenticateToken, (req, res) => controller.delete(req, res));
 export default router;
