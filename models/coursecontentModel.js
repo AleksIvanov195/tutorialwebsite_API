@@ -29,6 +29,7 @@ const CourseContentModel = {
 			fields = [
 				`${CourseContentModel.idField}`,
 				'CoursecontentCourseID',
+				'CoursecontentOrder',
 				'CASE WHEN CoursecontentLessonID IS NOT NULL THEN CoursecontentLessonID ELSE CoursecontentQuizID END AS ContentID',
 				'CASE WHEN CoursecontentLessonID IS NOT NULL THEN "Lesson" ELSE "Quiz" END AS ContentType',
 				'COALESCE(Lesson.LessonName, Quiz.QuizName) AS ContentName',
