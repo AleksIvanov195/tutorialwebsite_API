@@ -17,7 +17,7 @@ class Model {
 	}
 
 	buildUpdateQuery(id, data) {
-		return constructUpdateQuery(this.insertFields, this.table, this.idField, id, data);
+		return constructUpdateQuery(this.mutableFields, this.table, this.idField, id, data);
 	}
 
 	buildDeleteQuery(id) {
