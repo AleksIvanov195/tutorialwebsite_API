@@ -96,8 +96,13 @@ export const parseRequestQuery = (req, allowedFields) => {
 	if (req.query.search) {
 		const searchString = req.query.search.trim();
 		const conditions = [];
+		let searchFields = allowedFields;
 
-		allowedFields.forEach((field, index) => {
+		if(req.query.searchFields) {
+			searchFields = req.query.searchFields.split(',').map(field => field.trim()).filter(field => allowedFields.includes(field));
+		}
+
+		searchFields.forEach((field, index) => {
 			conditions.push(`${field} LIKE :search${index}`);
 			filter.parameters[`search${index}`] = `%${searchString}%`;
 		});
@@ -116,6 +121,6 @@ export const parseRequestQuery = (req, allowedFields) => {
 			filter.orderby = ` ORDER BY ${field} ${sortby}`;
 		}
 	}
-	console.log(filter)
+	console.log(filter);
 	return filter;
 };
