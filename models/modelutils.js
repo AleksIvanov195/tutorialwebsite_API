@@ -92,6 +92,21 @@ export const parseRequestQuery = (req, allowedFields) => {
 
 		}
 	}
+
+	if (req.query.search) {
+		const searchString = req.query.search.trim();
+		const conditions = [];
+
+		allowedFields.forEach((field, index) => {
+			conditions.push(`${field} LIKE :search${index}`);
+			filter.parameters[`search${index}`] = `%${searchString}%`;
+		});
+
+		if (conditions.length > 0) {
+			filter.filters += ` AND (${conditions.join(' OR ')})`;
+		}
+	}
+
 	if(req.query && req.query.orderby) {
 		// Format should be field,sortby - ID,DESC
 		const orderby = req.query.orderby.split(',');
@@ -101,5 +116,6 @@ export const parseRequestQuery = (req, allowedFields) => {
 			filter.orderby = ` ORDER BY ${field} ${sortby}`;
 		}
 	}
+	console.log(filter)
 	return filter;
 };
