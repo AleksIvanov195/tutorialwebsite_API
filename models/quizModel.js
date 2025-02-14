@@ -43,7 +43,7 @@ const quizModel = {
 
 		if (req.path.includes('questions-answers')) {
 			// Show quizzes created by the specified creator.
-			fields.push('QuestionID', 'QuestionText', 'QuestionFeedbacktext', 'QuestionType', 'AnswerID', 'AnswerText', 'AnswerCorrect');
+			fields.push('QuestionID', 'QuestionText', 'QuestionFeedbacktext', 'QuestionType', 'QuestionOrdernumber', 'AnswerID', 'AnswerText', 'AnswerCorrect');
 			table += `
 			LEFT JOIN Question ON QuizID = QuestionQuizID
 			LEFT JOIN Answer ON QuestionID = AnswerQuestionID

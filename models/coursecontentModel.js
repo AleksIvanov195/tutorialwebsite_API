@@ -4,11 +4,13 @@ const CourseContentModel = {
 	table: 'Coursecontent',
 	idField: 'CoursecontentID',
 	mutableFields: [
+		'CoursecontentCourseID',
 		'CoursecontentLessonID',
 		'CoursecontentQuizID',
 		'CoursecontentOrder',
 	],
 	insertFields: [
+		'CoursecontentCourseID',
 		'CoursecontentLessonID',
 		'CoursecontentQuizID',
 		'CoursecontentOrder',

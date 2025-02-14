@@ -29,7 +29,7 @@ class Accessor {
 		const { query, params } = this.model.buildUpdateQuery(id, data);
 		try {
 			const [result] = await this.database.execute(query, params);
-			return result;
+			return { result, idField: this.model.idField };
 		} catch (error) {
 			console.log('Error updating data: ', error);
 			throw error;
