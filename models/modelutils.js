@@ -1,4 +1,4 @@
-export const constructPreparedStatement = (fields, table, where, params, filter) => {
+export const constructPreparedStatement = (fields, table, where, params, filter, groupBy) => {
 
 	let query = `SELECT ${fields.join(', ')} FROM ${table}`;
 
@@ -9,6 +9,10 @@ export const constructPreparedStatement = (fields, table, where, params, filter)
 
 	if (where) {
 		query += ` WHERE 1=1 ${where}`;
+	}
+
+	if (groupBy) {
+		query += ` GROUP BY ${groupBy}`;
 	}
 
 	if(filter.orderby) {
@@ -93,7 +97,7 @@ export const parseRequestQuery = (req, allowedFields) => {
 		}
 	}
 
-	if (req.query.search) {
+	if (req.query && req.query.search) {
 		const searchString = req.query.search.trim();
 		const conditions = [];
 		let searchFields = allowedFields;
@@ -121,6 +125,5 @@ export const parseRequestQuery = (req, allowedFields) => {
 			filter.orderby = ` ORDER BY ${field} ${sortby}`;
 		}
 	}
-	console.log(filter);
 	return filter;
 };
