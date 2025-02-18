@@ -21,7 +21,7 @@ const quizModel = {
 	buildReadQuery: (req) => {
 		const userID = req.userID;
 		const { id: quizID } = req.params;
-		const fields = [
+		let fields = [
 			`${quizModel.idField}`,
 			...quizModel.mutableFields,
 		];
@@ -29,6 +29,7 @@ const quizModel = {
 		let table = quizModel.table;
 		let where = '';
 		const parameters = {};
+		let groupBy = '';
 
 		if (quizID) {
 			where += 'AND QuizID = :QuizID';
@@ -43,17 +44,29 @@ const quizModel = {
 
 		if (req.path.includes('questions-answers')) {
 			// Show quizzes created by the specified creator.
-			fields.push('QuestionID', 'QuestionText', 'QuestionFeedbacktext', 'QuestionType', 'QuestionOrdernumber', 'AnswerID', 'AnswerText', 'AnswerCorrect');
+			fields = [];
+			fields.push('QuizID', 'QuestionID', 'QuestionText', 'QuestionFeedbacktext', 'QuestionType', 'QuestionOrdernumber');
+			fields.push(`
+        JSON_ARRAYAGG(
+          JSON_OBJECT(
+            'AnswerID', AnswerID,
+            'AnswerText', AnswerText,
+            'AnswerCorrect', AnswerCorrect
+          )
+        ) AS Answers
+      `);
+
 			table += `
-			LEFT JOIN Question ON QuizID = QuestionQuizID
-			LEFT JOIN Answer ON QuestionID = AnswerQuestionID
-			`;
+        LEFT JOIN Question ON QuizID = QuestionQuizID
+        LEFT JOIN Answer ON QuestionID = AnswerQuestionID
+      `;
+			groupBy = 'QuizID, QuestionID';
 		}
 
 		const filter = parseRequestQuery(req, fields);
 
 		// Construct the SQL query string and its params
-		return constructPreparedStatement(fields,	table,	where,	parameters,	filter);
+		return constructPreparedStatement(fields,	table,	where,	parameters,	filter, groupBy);
 	},
 };
 
