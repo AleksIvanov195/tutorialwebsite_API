@@ -72,7 +72,7 @@ const CourseModel = {
 					LEFT JOIN 
 						Usercontentstatus ON Usercourse.UsercourseUsercontentstatusID = Usercontentstatus.UsercontentstatusID
 					LEFT JOIN 
-					  Userbookmarks ON Course.CourseID = Userbookmarks.UserbookmarkCourseID
+					  Userbookmarks ON Course.CourseID = Userbookmarks.UserbookmarkCourseID AND Userbookmarks.UserbookmarkUserID = :UserID
 				) AS subquery`;
 
 			parameters.UserID = parseInt(userID);
