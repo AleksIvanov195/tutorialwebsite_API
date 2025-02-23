@@ -49,12 +49,19 @@ const CourseModel = {
 			fields.push(
 				'UsercontentstatusID',
 				'UsercontentstatusName',
+				'UserbookmarkID',
+				'IsBookmarked',
 			);
 			table = `(SELECT 
 						${CourseModel.idField},
 						${CourseModel.mutableFields},
 						COALESCE(Usercontentstatus.UsercontentstatusID, 1) AS UsercontentstatusID,
-						COALESCE(Usercontentstatus.UsercontentstatusName, 'NotStarted') AS UsercontentstatusName
+						COALESCE(Usercontentstatus.UsercontentstatusName, 'NotStarted') AS UsercontentstatusName,
+						UserbookmarkID,
+						CASE 
+							WHEN Userbookmarks.UserbookmarkCourseID IS NOT NULL THEN 1 
+							ELSE 0 
+						END AS IsBookmarked
 					FROM 
 					${CourseModel.table}
 					LEFT JOIN
@@ -64,6 +71,8 @@ const CourseModel = {
 						AND Usercourse.UsercourseUserID = :UserID
 					LEFT JOIN 
 						Usercontentstatus ON Usercourse.UsercourseUsercontentstatusID = Usercontentstatus.UsercontentstatusID
+					LEFT JOIN 
+					  Userbookmarks ON Course.CourseID = Userbookmarks.UserbookmarkCourseID
 				) AS subquery`;
 
 			parameters.UserID = parseInt(userID);

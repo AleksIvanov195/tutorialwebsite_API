@@ -11,6 +11,7 @@ import quizRoutes from './routes/quizRoutes.js';
 import questionRoutes from './routes/questionRoutes.js';
 import answerRoutes from './routes/answerRoutes.js';
 import coursecontentRoutes from './routes/coursecontentRoutes.js';
+import userbookmarkRoutes from './routes/userbookmarkRoutes.js'
 
 import { domainRouter, defaultRouter } from './routes/defaultRouter.js';
 
@@ -49,6 +50,7 @@ app.use('/api/quizzes', quizRoutes);
 app.use('/api/questions', questionRoutes);
 app.use('/api/answers', answerRoutes);
 app.use('/api/coursecontents', coursecontentRoutes);
+app.use('/api/userbookmarks', userbookmarkRoutes);
 app.use('/api/', domainRouter);
 app.use('/api/*', defaultRouter);
 
