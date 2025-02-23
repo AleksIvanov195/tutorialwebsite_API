@@ -10,13 +10,16 @@ const CourseModel = {
 		'CoursecategoryName',
 		'CourseDatecreated',
 		'CoursePublicationstatusID',
+		'CoursecreatorUserID',
 	],
 	insertFields: [
 		'CourseName',
 		'CourseDescription',
 		'CourseCoursecategoryID',
 		'CoursePublicationstatusID',
+		'CoursecreatorUserID',
 	],
+	creatorField: 'CoursecreatorUserID',
 
 	// Build the query for reading data
 	buildReadQuery: (req) => {
@@ -30,22 +33,11 @@ const CourseModel = {
 		];
 
 		let table = `${CourseModel.table}
-								LEFT JOIN
-								Coursecategory
-								ON
-								Course.CourseCoursecategoryID = Coursecategory.CoursecategoryID`;
+								LEFT JOIN Coursecategory ON CourseCoursecategoryID = CoursecategoryID`
 
 		let where = '';
 		const parameters = {};
 
-		// Add publciation status if required
-		if (req.path.includes('/publicationstatus')) {
-			fields.push('PublicationstatusName');
-			table += ` INNER JOIN 
-    						Publicationstatus 
-								ON 
-    						Course.CoursePublicationstatusID = Publicationstatus.PublicationstatusID`;
-		}
 		// Filter by course ID if it is provided
 		if (courseID) {
 			where += 'AND CourseID = :CourseID';
@@ -75,6 +67,12 @@ const CourseModel = {
 				) AS subquery`;
 
 			parameters.UserID = parseInt(userID);
+		}
+		if (req.path.includes('/mycourses')) {
+			fields.push('PublicationstatusName as CoursePublicationstatusName');
+			table += ' INNER JOIN Publicationstatus ON CoursePublicationstatusID = PublicationstatusID';
+			where += 'AND CoursecreatorUserID = :CoursecreatorUserID';
+			parameters.CoursecreatorUserID = parseInt(userID);
 		}
 		// Add filters from request query if any
 		const filter = parseRequestQuery(req, fields);

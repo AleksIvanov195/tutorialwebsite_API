@@ -15,6 +15,7 @@ const router = express.Router();
 
 router.get('/users', authenticateToken, (req, res) => controller.get(req, res));
 router.get('/publicationstatus', authenticateToken, (req, res) => controller.get(req, res));
+router.get('/mycourses', authenticateToken, (req, res) => controller.get(req, res));
 router.get('/:id', (req, res) => controller.get(req, res));
 router.get('/', (req, res) => controller.get(req, res));
 
