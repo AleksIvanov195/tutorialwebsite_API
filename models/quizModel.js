@@ -24,9 +24,11 @@ const quizModel = {
 		let fields = [
 			`${quizModel.idField}`,
 			...quizModel.mutableFields,
+			'PublicationstatusName AS QuizPublicationstatusName',
 		];
 
-		let table = quizModel.table;
+		let table = `${quizModel.table}
+		INNER JOIN Publicationstatus ON QuizPublicationstatusID = PublicationstatusID`;
 		let where = '';
 		const parameters = {};
 		let groupBy = '';

@@ -25,9 +25,11 @@ const LessonModel = {
 		const fields = [
 			`${LessonModel.idField}`,
 			...LessonModel.mutableFields,
+			'PublicationstatusName AS LessonPublicationstatusName',
 		];
 
-		const table = LessonModel.table;
+		const table = `${LessonModel.table}
+		INNER JOIN Publicationstatus ON LessonPublicationstatusID = PublicationstatusID`;
 		let where = '';
 		const parameters = {};
 
