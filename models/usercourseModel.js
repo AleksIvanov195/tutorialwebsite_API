@@ -13,10 +13,8 @@ const UserCourseModel = {
 	insertFields: [
 		'UsercourseUserID',
 		'UsercourseCourseID',
-		'UsercourseUsercontentstatusID',
 	],
-
-	// Related tables: Course and Usercontentstatus
+	creatorField: 'UsercourseUserID',
 
 	buildReadQuery: (req) => {
 		// Initialisations ------------------------
