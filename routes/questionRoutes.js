@@ -1,5 +1,6 @@
 import express from 'express';
 import { authenticateToken, authoriseRoles } from '../middleware/auth.js';
+import { validateQuestionPut, validateQuestionReorderPut } from '../validators/questionValidator.js';
 import Accessor from '../accessors/Accessor.js';
 import Controller from '../controllers/Controller.js';
 import database from '../database.js';
@@ -17,7 +18,8 @@ router.get('/', authenticateToken, (req, res) => controller.get(req, res));
 
 router.post('/', authenticateToken, authoriseRoles(['ContentCreator']), (req, res) => controller.post(req, res));
 
-router.put('/:id', authenticateToken, authoriseRoles(['ContentCreator']), (req, res) => controller.put(req, res));
+router.put('/:id/reorder', authenticateToken, validateQuestionReorderPut, authoriseRoles(['ContentCreator']), (req, res) => controller.put(req, res));
+router.put('/:id', authenticateToken, validateQuestionPut, authoriseRoles(['ContentCreator']), (req, res) => controller.put(req, res));
 
 router.delete('/:id', authenticateToken, authoriseRoles(['ContentCreator']), (req, res) => controller.delete(req, res));
 export default router;

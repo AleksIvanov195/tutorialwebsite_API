@@ -20,7 +20,7 @@ router.get('/:id', (req, res) => controller.get(req, res));
 router.get('/', (req, res) => controller.get(req, res));
 
 
-router.post('/', validateCourse, authenticateToken, authoriseRoles(['Admin', 'ContentCreator']), (req, res) => controller.post(req, res));
+router.post('/', authenticateToken, validateCourse, authoriseRoles(['Admin', 'ContentCreator']), (req, res) => controller.post(req, res));
 
 router.put('/:id', authenticateToken, authoriseRoles(['Admin', 'ContentCreator']), (req, res) => controller.put(req, res));
 

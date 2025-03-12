@@ -7,10 +7,8 @@ const answerPostSchema = Joi.object({
 });
 
 const answerPutSchema = Joi.object({
-	AnswerID: Joi.number().integer().required(),
 	AnswerText: Joi.string().min(3).max(255).required(),
-	AnswerCorrect: Joi.boolean().required(),
-	AnswerQuestionID: Joi.number().integer().required(),
+	AnswerCorrect: Joi.alternatives().try(Joi.boolean(), Joi.number().valid(0, 1)).required(),
 });
 
 export const validateAnswerPost = (req, res, next) => {
