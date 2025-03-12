@@ -1,6 +1,6 @@
 import express from 'express';
 import { authenticateToken, authoriseRoles } from '../middleware/auth.js';
-import { validateAnswerPut } from '../validators/answerValidator.js';
+import { validateAnswerPut, validateAnswerPost } from '../validators/answerValidator.js';
 import Accessor from '../accessors/Accessor.js';
 import Controller from '../controllers/Controller.js';
 import database from '../database.js';
@@ -16,7 +16,7 @@ const router = express.Router();
 router.get('/:id', authenticateToken, (req, res) => controller.get(req, res));
 router.get('/', authenticateToken, (req, res) => controller.get(req, res));
 
-router.post('/', authenticateToken, authoriseRoles(['ContentCreator']), (req, res) => controller.post(req, res));
+router.post('/', authenticateToken, validateAnswerPost, authoriseRoles(['ContentCreator']), (req, res) => controller.post(req, res));
 
 router.put('/:id', validateAnswerPut, authenticateToken, authoriseRoles(['ContentCreator']), (req, res) => controller.put(req, res));
 
