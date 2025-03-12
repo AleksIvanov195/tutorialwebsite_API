@@ -42,6 +42,22 @@ const CourseContentModel = {
 			LEFT JOIN Quiz ON Coursecontent.CoursecontentQuizID = Quiz.QuizID`;
 		}
 
+		if (req.path.includes('/simplified/user-completion')) {
+			const userID = req.userID;
+			fields.push(
+				`CASE 
+        WHEN Coursecontent.CoursecontentQuizID IS NOT NULL THEN
+            CASE 
+                WHEN Userquiz.UserquizUsercontentstatusID = 3 THEN TRUE
+                ELSE FALSE
+            END
+   			 END AS ContentStatus`,
+			);
+			table += `
+			LEFT JOIN Userquiz ON Userquiz.UserquizQuizID = Quiz.QuizID AND Userquiz.UserquizUserID = :UserID
+			`;
+			parameters.UserID = parseInt(userID);
+		}
 
 		const filter = parseRequestQuery(req, fields);
 
