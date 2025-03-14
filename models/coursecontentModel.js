@@ -26,6 +26,7 @@ const CourseContentModel = {
 		let table = CourseContentModel.table;
 		const where = '';
 		const parameters = {};
+		let groupBy = '';
 
 		if (req.path.includes('/simplified')) {
 			fields = [
@@ -48,7 +49,7 @@ const CourseContentModel = {
 				`CASE 
         WHEN Coursecontent.CoursecontentQuizID IS NOT NULL THEN
             CASE 
-                WHEN Userquiz.UserquizUsercontentstatusID = 3 THEN TRUE
+                WHEN MAX(Userquiz.UserquizUsercontentstatusID) = 3 THEN TRUE
                 ELSE FALSE
             END
    			 END AS ContentStatus`,
@@ -56,6 +57,7 @@ const CourseContentModel = {
 			table += `
 			LEFT JOIN Userquiz ON Userquiz.UserquizQuizID = Quiz.QuizID AND Userquiz.UserquizUserID = :UserID
 			`;
+			groupBy = 'CoursecontentID';
 			parameters.UserID = parseInt(userID);
 		}
 
