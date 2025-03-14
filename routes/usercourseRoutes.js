@@ -5,21 +5,21 @@ import { authenticateToken } from '../middleware/auth.js';
 import database from '../database.js';
 import userCourseModel from '../models/usercourseModel.js';
 import Model from '../models/Model.js';
-
+import { checkOwnership } from '../middleware/checkOwnership.js';
 const model = new Model(userCourseModel);
 const accessor = new Accessor(model, database);
 const controller = new Controller(accessor);
 const router = express.Router();
 
 router.get('/users', authenticateToken, (req, res) => controller.get(req, res));
-router.get('/:id', (req, res) => controller.get(req, res));
-router.get('/', (req, res) => controller.get(req, res));
+router.get('/:id', authenticateToken, (req, res) => controller.get(req, res));
+router.get('/', authenticateToken, (req, res) => controller.get(req, res));
 
 router.post('/', authenticateToken, (req, res) => controller.post(req, res));
 
-router.put('/:id/complete', authenticateToken, (req, res) => controller.put(req, res));
-router.put('/:id', authenticateToken, (req, res) => controller.put(req, res));
+router.put('/:id/complete', authenticateToken, checkOwnership(model, database), (req, res) => controller.put(req, res));
+router.put('/:id', authenticateToken, checkOwnership(model, database), (req, res) => controller.put(req, res));
 
 
-router.delete('/:id', authenticateToken, (req, res) => controller.delete(req, res));
+router.delete('/:id', authenticateToken, checkOwnership(model, database), (req, res) => controller.delete(req, res));
 export default router;
