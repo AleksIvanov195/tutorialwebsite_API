@@ -11,7 +11,7 @@ export const checkOwnership = (model, database) => async (req, res, next) => {
 		}
 
 		// Check if the user is the owner of the record
-		if (record[model.creatorField] !== userID) {
+		if (record[0][model.creatorField] !== userID) {
 			return res.status(403).json({ message: 'Forbidden: You do not have permission to access this resource.' });
 		}
 		next();
