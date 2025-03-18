@@ -64,7 +64,7 @@ const CourseContentModel = {
 		const filter = parseRequestQuery(req, fields);
 
 		// Construct the SQL query string and its params
-		return constructPreparedStatement(fields,	table,	where,	parameters,	filter);
+		return constructPreparedStatement(fields,	table,	where,	parameters,	filter, groupBy);
 	},
 };
 
