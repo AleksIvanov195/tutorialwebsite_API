@@ -13,7 +13,7 @@ import answerRoutes from './routes/answerRoutes.js';
 import coursecontentRoutes from './routes/coursecontentRoutes.js';
 import userbookmarkRoutes from './routes/userbookmarkRoutes.js';
 import usercontentstatusRoutes from './routes/usercontentstatusRoutes.js';
-
+import userquizRoutes from './routes/userquizRoutes.js';
 import { domainRouter, defaultRouter } from './routes/defaultRouter.js';
 
 dotenv.config();
@@ -53,6 +53,7 @@ app.use('/api/answers', answerRoutes);
 app.use('/api/coursecontents', coursecontentRoutes);
 app.use('/api/userbookmarks', userbookmarkRoutes);
 app.use('/api/usercontentstatus', usercontentstatusRoutes);
+app.use('/api/userquizzes', userquizRoutes);
 app.use('/api/', domainRouter);
 app.use('/api/*', defaultRouter);
 
