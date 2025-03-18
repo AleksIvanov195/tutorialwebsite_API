@@ -1,7 +1,7 @@
 import { constructPreparedStatement, parseRequestQuery } from './modelutils.js';
 
 const UserbookmarkModel = {
-	table: 'Userbookmarks',
+	table: 'Userbookmark',
 	idField: 'UserbookmarkID',
 	mutableFields: [
 		'UserbookmarkCourseID',

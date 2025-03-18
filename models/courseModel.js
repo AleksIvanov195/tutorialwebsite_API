@@ -59,7 +59,7 @@ const CourseModel = {
 						COALESCE(Usercontentstatus.UsercontentstatusName, 'NotStarted') AS UsercontentstatusName,
 						UserbookmarkID,
 						CASE 
-							WHEN Userbookmarks.UserbookmarkCourseID IS NOT NULL THEN 1 
+							WHEN Userbookmark.UserbookmarkCourseID IS NOT NULL THEN 1 
 							ELSE 0 
 						END AS IsBookmarked
 					FROM 
@@ -72,7 +72,7 @@ const CourseModel = {
 					LEFT JOIN 
 						Usercontentstatus ON Usercourse.UsercourseUsercontentstatusID = Usercontentstatus.UsercontentstatusID
 					LEFT JOIN 
-					  Userbookmarks ON Course.CourseID = Userbookmarks.UserbookmarkCourseID AND Userbookmarks.UserbookmarkUserID = :UserID
+					  Userbookmark ON Course.CourseID = Userbookmark.UserbookmarkCourseID AND Userbookmark.UserbookmarkUserID = :UserID
 				) AS subquery`;
 
 			parameters.UserID = parseInt(userID);
@@ -87,6 +87,7 @@ const CourseModel = {
 		const filter = parseRequestQuery(req, fields);
 
 		// Construct the SQL query string and its params
+		console.log(constructPreparedStatement(fields,	table,	where,	parameters,	filter))
 		return constructPreparedStatement(fields,	table,	where,	parameters,	filter);
 	},
 };
