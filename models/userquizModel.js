@@ -2,7 +2,7 @@ import { constructPreparedStatement, parseRequestQuery } from './modelutils.js';
 
 const UserquizModel = {
 	table: 'Userquiz',
-	idField: 'UserquizID ',
+	idField: 'UserquizID',
 	mutableFields: [
 		'UserquizUserID',
 		'UserquizQuizID',
