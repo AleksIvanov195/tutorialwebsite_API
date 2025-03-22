@@ -13,8 +13,7 @@ const UserlessonModel = {
 	insertFields: [
 		'UserlessonUserID',
 		'UserlessonLessonID',
-		'UserlessonUsercontentstatusID ',
-		'UserlessonStartdate',
+		'UserlessonUsercontentstatusID',
 		'UserlessonCompletiondate', // Temporary
 	],
 	creatorField: 'UserlessonUserID',
