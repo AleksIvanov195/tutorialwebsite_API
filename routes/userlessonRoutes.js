@@ -2,7 +2,7 @@ import express from 'express';
 import Controller from '../controllers/Controller.js';
 import Accessor from '../accessors/Accessor.js';
 import { authenticateToken, authoriseRoles } from '../middleware/auth.js';
-import { validateCompleteLesson, validateLessonPost } from '../validators/userlessonValidator.js';
+import { validateCompleteLesson, validateUserlessonPost } from '../validators/userlessonValidator.js';
 import database from '../database.js';
 import UserlessonModel from '../models/userlessonModel.js';
 import Model from '../models/Model.js';
@@ -16,7 +16,7 @@ const router = express.Router();
 router.get('/users', authenticateToken, (req, res) => controller.get(req, res));
 router.get('/', authenticateToken, authoriseRoles(['ContentCreator', 'Admin']), (req, res) => controller.get(req, res));
 
-router.post('/', authenticateToken, validateLessonPost, (req, res) => controller.post(req, res));
+router.post('/', authenticateToken, validateUserlessonPost, (req, res) => controller.post(req, res));
 
 router.put('/:id/complete', authenticateToken, validateCompleteLesson, checkOwnership(model, database), (req, res) => controller.put(req, res));
 // router.put('/:id', authenticateToken, checkOwnership(model, database), (req, res) => controller.put(req, res));

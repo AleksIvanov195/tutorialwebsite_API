@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const lessonPostSchema = Joi.object({
+const userlessonPostSchema = Joi.object({
 	UserlessonUsercontentstatusID : Joi.number().integer().valid(3).required(), // Temporary set to 3
 	UserlessonCompletiondate: Joi.date().iso(), // Temporary here
 	UserlessonLessonID: Joi.number().integer().required(),
@@ -11,8 +11,8 @@ const completelessonSchema = Joi.object({
 	UserlessonCompletiondate: Joi.date().iso(),
 });
 
-export const validateLessonPost = (req, res, next) => {
-	const { error } = lessonPostSchema.validate(req.body);
+export const validateUserlessonPost = (req, res, next) => {
+	const { error } = userlessonPostSchema.validate(req.body);
 	if (error) {
 		return res.status(400).json({ message: error.details[0].message });
 	}

@@ -15,6 +15,7 @@ import userbookmarkRoutes from './routes/userbookmarkRoutes.js';
 import usercontentstatusRoutes from './routes/usercontentstatusRoutes.js';
 import userquizRoutes from './routes/userquizRoutes.js';
 import { domainRouter, defaultRouter } from './routes/defaultRouter.js';
+import userlessonRoutes from './routes/userlessonRoutes.js';
 
 dotenv.config();
 const app = express();
@@ -54,6 +55,7 @@ app.use('/api/coursecontents', coursecontentRoutes);
 app.use('/api/userbookmarks', userbookmarkRoutes);
 app.use('/api/usercontentstatus', usercontentstatusRoutes);
 app.use('/api/userquizzes', userquizRoutes);
+app.use('/api/userlessons', userlessonRoutes);
 app.use('/api/', domainRouter);
 app.use('/api/*', defaultRouter);
 
