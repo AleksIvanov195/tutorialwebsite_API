@@ -49,6 +49,7 @@ const CourseModel = {
 			fields.push(
 				'UsercontentstatusID',
 				'UsercontentstatusName',
+				'UsercourseID',
 				'UserbookmarkID',
 				'IsBookmarked',
 			);
@@ -58,6 +59,7 @@ const CourseModel = {
 						COALESCE(Usercontentstatus.UsercontentstatusID, 1) AS UsercontentstatusID,
 						COALESCE(Usercontentstatus.UsercontentstatusName, 'NotStarted') AS UsercontentstatusName,
 						UserbookmarkID,
+						UsercourseID,
 						CASE 
 							WHEN Userbookmark.UserbookmarkCourseID IS NOT NULL THEN 1 
 							ELSE 0 
