@@ -1,5 +1,5 @@
 import express from 'express';
-import { validateCourse } from '../validators/courseValidator.js';
+import { validateCourse, validateCourseContentStatus, validateCourseEdit } from '../validators/courseValidator.js';
 import { authenticateToken, authoriseRoles } from '../middleware/auth.js';
 import Accessor from '../accessors/Accessor.js';
 import Controller from '../controllers/Controller.js';
@@ -22,6 +22,8 @@ router.get('/', (req, res) => controller.get(req, res));
 
 router.post('/', authenticateToken, validateCourse, authoriseRoles(['Admin', 'ContentCreator']), (req, res) => controller.post(req, res));
 
+router.put('/:id/course-edit', authenticateToken, validateCourseEdit, authoriseRoles(['ContentCreator']), (req, res) => controller.put(req, res));
+router.put('/:id/content-status', authenticateToken, validateCourseContentStatus, authoriseRoles(['ContentCreator']), (req, res) => controller.put(req, res));
 router.put('/:id', authenticateToken, authoriseRoles(['Admin', 'ContentCreator']), (req, res) => controller.put(req, res));
 
 router.delete('/:id', authenticateToken, authoriseRoles(['Admin', 'ContentCreator']), (req, res) => controller.delete(req, res));
