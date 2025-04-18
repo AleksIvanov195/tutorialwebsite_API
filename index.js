@@ -35,6 +35,7 @@ app.use(cors({
 	methods: 'GET, POST, PUT, DELETE',
 	credentials: true,
 	allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+	exposedHeaders: ['x-total-count'],
 }));
 
 app.use(cookieParser());

@@ -5,10 +5,12 @@ class Accessor {
 	}
 
 	async fetchData(req) {
-		const { query, params } = this.model.buildReadQuery(req);
+		const { query, params, countQuery } = this.model.buildReadQuery(req);
 		try {
 			const [data] = await this.database.execute(query, params);
-			return data;
+			const [count] = await this.database.execute(countQuery, params);
+			const totalRecords = count[0]?.TotalRecords || 0;
+			return { data, totalRecords };
 		} catch (error) {
 			console.log('Error getting data: ', error);
 			throw error;

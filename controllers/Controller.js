@@ -5,8 +5,10 @@ class Controller {
 
 	async get(req, res) {
 		try {
-			const data = await this.accessor.fetchData(req);
+			const { data, totalRecords } = await this.accessor.fetchData(req);
 			if (!data.length || data.length === 0) return res.status(404).json({ message: 'No data found.' });
+			// Send totalRecords in a header and data in the body
+			res.setHeader('x-total-count', totalRecords);
 			res.status(200).json(data);
 
 		} catch (error) {

@@ -7,9 +7,13 @@ export const constructPreparedStatement = (fields, table, where, params, filter,
 		Object.assign(params, filter.parameters);
 	}
 
+	// build shared WHERE clause
+	let baseWhere = '';
 	if (where) {
-		query += ` WHERE 1=1 ${where}`;
+		baseWhere = ` WHERE 1=1 ${where}`;
 	}
+	// Apply it to normal query
+	query += baseWhere;
 
 	if (groupBy) {
 		query += ` GROUP BY ${groupBy}`;
@@ -26,7 +30,10 @@ export const constructPreparedStatement = (fields, table, where, params, filter,
 	if (filter.offset) {
 		query += filter.offset;
 	}
-	return { query, params };
+
+	// Return total count without pagination and filters
+	const countQuery = `SELECT COUNT(*) AS TotalRecords FROM ${table} ${baseWhere}`;
+	return { query, params, countQuery };
 };
 
 export const constructInsertQuery = (fields, table, data) => {
@@ -151,7 +158,7 @@ export const parseRequestQuery = (req, allowedFields) => {
 			filter.offset = ' OFFSET :offset';
 			filter.parameters.offset = offset;
 		}
-	}else if(req.query.offset) {
+	}else if(req.query && req.query.offset) {
 		// Otherwise use the provided offset value directly
 		const offset = parseInt(req.query.offset, 10);
 		if (Number.isInteger(offset) && offset > 0) {
