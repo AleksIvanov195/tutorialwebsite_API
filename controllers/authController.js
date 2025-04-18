@@ -11,7 +11,8 @@ class AuthController {
 		const data = req.body;
 
 		// Check if user exists
-		const existingUser = await this.accessor.fetchData(req);
+		const fetchResult = await this.accessor.fetchData(req);
+		const existingUser = fetchResult.data;
 		if (existingUser && existingUser.length > 0) {
 			return res.status(400).json({ message: 'User already exists.' });
 		}
@@ -59,7 +60,8 @@ class AuthController {
 
 		try{
 			// Get user
-			const result = await this.accessor.fetchData(req);
+			const fetchResult = await this.accessor.fetchData(req);
+			const result = fetchResult.data;
 			if(!result || result.length === 0) {
 				return res.status(404).json({ message: 'User not found.' });
 			}
@@ -105,7 +107,8 @@ class AuthController {
 			const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
 
 			// Get the user
-			const result = await this.accessor.fetchData({ body: { userID: decoded.userID } });
+			const fetchResult = await this.accessor.fetchData({ body: { userID: decoded.userID } });
+			const result = fetchResult.data;
 			if (!result || result.length === 0) {
 				return res.status(404).json({ message: 'User not found.' });
 			}
