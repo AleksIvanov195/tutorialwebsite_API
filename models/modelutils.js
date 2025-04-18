@@ -18,6 +18,14 @@ export const constructPreparedStatement = (fields, table, where, params, filter,
 	if(filter.orderby) {
 		query += filter.orderby;
 	}
+
+	if (filter.limit) {
+		query += filter.limit;
+	}
+
+	if (filter.offset) {
+		query += filter.offset;
+	}
 	return { query, params };
 };
 
@@ -66,6 +74,8 @@ export const parseRequestQuery = (req, allowedFields) => {
 		filters: '',
 		parameters: {},
 		orderby: '',
+		limit:'',
+		offset: '',
 	};
 
 	for(const key in req.query) {
@@ -123,6 +133,30 @@ export const parseRequestQuery = (req, allowedFields) => {
 		const sortby = orderby[1] && orderby[1].toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
 		if (allowedFields.includes(field)) {
 			filter.orderby = ` ORDER BY ${field} ${sortby}`;
+		}
+	}
+	// Pagination ----------------------
+	if(req.query && req.query.limit) {
+		const limit = parseInt(req.query.limit, 10);
+		if(Number.isInteger(limit) && limit > 0) {
+			filter.limit = ' LIMIT :limit';
+			filter.parameters.limit = limit;
+		}
+	}
+	// If a page is specified calculate the offset based on the limit
+	if(req.query && filter.parameters.limit != null && req.query.page) {
+		const page = parseInt(req.query.page, 10);
+		if (Number.isInteger(page) && page > 0) {
+			const offset = (page - 1) * filter.parameters.limit;
+			filter.offset = ' OFFSET :offset';
+			filter.parameters.offset = offset;
+		}
+	}else if(req.query.offset) {
+		// Otherwise use the provided offset value directly
+		const offset = parseInt(req.query.offset, 10);
+		if (Number.isInteger(offset) && offset > 0) {
+			filter.offset = ' OFFSET :offset';
+			filter.parameters.offset = offset;
 		}
 	}
 	return filter;
