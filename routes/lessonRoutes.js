@@ -18,11 +18,11 @@ router.get('/:id', (req, res) => controller.get(req, res));
 router.get('/', authenticateToken, (req, res) => controller.get(req, res));
 
 
-router.post('/', validateLesson, authenticateToken, authoriseRoles(['ContentCreator']), (req, res) => controller.post(req, res));
+router.post('/', authenticateToken, authoriseRoles(['ContentCreator']), validateLesson, (req, res) => controller.post(req, res));
 
-router.put('/:id/name-description', authenticateToken, validateLessonNameDescription, authoriseRoles(['ContentCreator']), (req, res) => controller.put(req, res));
-router.put('/:id/content-status', authenticateToken, validateLessonContentStatus, authoriseRoles(['ContentCreator']), (req, res) => controller.put(req, res));
-router.put('/:id', authenticateToken, validateLesson, authoriseRoles(['ContentCreator']), (req, res) => controller.put(req, res));
+router.put('/:id/name-description', authenticateToken, authoriseRoles(['ContentCreator']), validateLessonNameDescription, (req, res) => controller.put(req, res));
+router.put('/:id/content-status', authenticateToken, authoriseRoles(['ContentCreator']), validateLessonContentStatus, (req, res) => controller.put(req, res));
+router.put('/:id', authenticateToken, authoriseRoles(['ContentCreator']), validateLesson, (req, res) => controller.put(req, res));
 
 router.delete('/:id', authenticateToken, authoriseRoles(['ContentCreator']), (req, res) => controller.delete(req, res));
 

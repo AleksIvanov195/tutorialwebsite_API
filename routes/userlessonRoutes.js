@@ -18,7 +18,7 @@ router.get('/', authenticateToken, authoriseRoles(['ContentCreator', 'Admin']), 
 
 router.post('/', authenticateToken, validateUserlessonPost, (req, res) => controller.post(req, res));
 
-router.put('/:id/complete', authenticateToken, validateCompleteLesson, checkOwnership(model, database), (req, res) => controller.put(req, res));
+router.put('/:id/complete', authenticateToken, checkOwnership(model, database), validateCompleteLesson, (req, res) => controller.put(req, res));
 // router.put('/:id', authenticateToken, checkOwnership(model, database), (req, res) => controller.put(req, res));
 
 router.delete('/:id', authenticateToken, checkOwnership(model, database), (req, res) => controller.delete(req, res));

@@ -2,6 +2,7 @@ import express from 'express';
 import Controller from '../controllers/Controller.js';
 import Accessor from '../accessors/Accessor.js';
 import { authenticateToken } from '../middleware/auth.js';
+import { validateCompleteCourse, validateUsercoursePost } from '../validators/usercourseValidator.js';
 import database from '../database.js';
 import userCourseModel from '../models/usercourseModel.js';
 import Model from '../models/Model.js';
@@ -17,10 +18,10 @@ router.get('/users', authenticateToken, (req, res) => controller.get(req, res));
 router.get('/:id', authenticateToken, (req, res) => controller.get(req, res));
 router.get('/', authenticateToken, (req, res) => controller.get(req, res));
 
-router.post('/', authenticateToken, (req, res) => controller.post(req, res));
+router.post('/', authenticateToken, validateUsercoursePost, (req, res) => controller.post(req, res));
 
-router.put('/:id/complete', authenticateToken, checkOwnership(model, database), checkCourseCompletion(model, database), (req, res) => controller.put(req, res));
-router.put('/:id', authenticateToken, checkOwnership(model, database), (req, res) => controller.put(req, res));
+router.put('/:id/complete', authenticateToken, checkOwnership(model, database), validateCompleteCourse, checkCourseCompletion(model, database), (req, res) => controller.put(req, res));
+// router.put('/:id', authenticateToken, checkOwnership(model, database), (req, res) => controller.put(req, res));
 
 
 router.delete('/:id', authenticateToken, checkOwnership(model, database), (req, res) => controller.delete(req, res));

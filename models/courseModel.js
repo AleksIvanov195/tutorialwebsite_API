@@ -44,7 +44,7 @@ const CourseModel = {
 			parameters.CourseID = parseInt(courseID);
 		}
 
-		// Add user-related fields and join tables if user ID is provided
+		// Add user-related fields and join tables
 		if (req.path.includes('/users')) {
 			fields.push(
 				'UsercontentstatusID',

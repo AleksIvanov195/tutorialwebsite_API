@@ -16,10 +16,10 @@ const router = express.Router();
 router.get('/:id', authenticateToken, (req, res) => controller.get(req, res));
 router.get('/', authenticateToken, (req, res) => controller.get(req, res));
 
-router.post('/', authenticateToken, validateQuestionPost, authoriseRoles(['ContentCreator']), (req, res) => controller.post(req, res));
+router.post('/', authenticateToken, authoriseRoles(['ContentCreator']), validateQuestionPost, (req, res) => controller.post(req, res));
 
-router.put('/:id/reorder', authenticateToken, validateQuestionReorderPut, authoriseRoles(['ContentCreator']), (req, res) => controller.put(req, res));
-router.put('/:id', authenticateToken, validateQuestionPut, authoriseRoles(['ContentCreator']), (req, res) => controller.put(req, res));
+router.put('/:id/reorder', authenticateToken, authoriseRoles(['ContentCreator']), validateQuestionReorderPut, (req, res) => controller.put(req, res));
+router.put('/:id', authenticateToken, authoriseRoles(['ContentCreator']), validateQuestionPut, (req, res) => controller.put(req, res));
 
 router.delete('/:id', authenticateToken, authoriseRoles(['ContentCreator']), (req, res) => controller.delete(req, res));
 export default router;

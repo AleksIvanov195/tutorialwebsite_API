@@ -19,11 +19,11 @@ router.get('/:id', (req, res) => controller.get(req, res));
 router.get('/', authenticateToken, (req, res) => controller.get(req, res));
 
 
-router.post('/', authenticateToken, authoriseRoles(['ContentCreator']), (req, res) => controller.post(req, res));
+router.post('/', authenticateToken, authoriseRoles(['ContentCreator']), validateQuiz, (req, res) => controller.post(req, res));
 
-router.put('/:id/name-description', authenticateToken, validateQuizNameDescription, authoriseRoles(['ContentCreator']), (req, res) => controller.put(req, res));
-router.put('/:id/content-status', authenticateToken, validateQuizContentStatus, authoriseRoles(['ContentCreator']), (req, res) => controller.put(req, res));
-router.put('/:id', authenticateToken, validateQuiz, authoriseRoles(['ContentCreator']), (req, res) => controller.put(req, res));
+router.put('/:id/name-description', authenticateToken, authoriseRoles(['ContentCreator']), validateQuizNameDescription, (req, res) => controller.put(req, res));
+router.put('/:id/content-status', authenticateToken, authoriseRoles(['ContentCreator']), validateQuizContentStatus, (req, res) => controller.put(req, res));
+router.put('/:id', authenticateToken, authoriseRoles(['ContentCreator']), validateQuiz, (req, res) => controller.put(req, res));
 
 router.delete('/:id', authenticateToken, authoriseRoles(['ContentCreator']), (req, res) => controller.delete(req, res));
 export default router;
